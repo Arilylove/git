@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" type="text/css" href="__CSS__/common.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/adminMerchant.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/addrole.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/order_management.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/page.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/input.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <title></title>
+</head>
+<body>
+<div class="width-min">
+    <div class="head zoom_clear">
+        <!--<img class="logo" src="__IMG__/2.png">-->
+        <div>
+            <a href="javascript:void(0);"  style="color:white;width:100px; float:right; text-align:right; line-height:60px; text-decoration: underline;"  onclick="out();">退出登录</a>
+        </div>
+
+        <div>
+            <a href="javascript:void(0);" onclick="isUpdate()" style="color:white;width:100px; float:right; text-align:right; line-height:60px;text-decoration:underline;">修改密码</a>
+        </div>
+
+
+    </div>
+</div>
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script>
+    function out(){
+        if (confirm('确定退出登录？')){
+            return parent.location.href="/index/Login/out";
+        }else{
+            return false;
+        }
+    }
+    function isUpdate(){
+        if (confirm('确定修改密码？')){
+            return parent.location.href="/index/base/update";
+        }else{
+            return false;
+        }
+
+    }
+    $('.xx').click(function(){
+        $('#updatePassword').hide();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__JS__/jQuery/datedropper.css">
+    <link rel="stylesheet" type="text/css" href="__JS__/jQuery/timedropper.min.css">
+    <style>
+        .id{
+            width:88px;
+            height:28px;
+            font-size: 18px;
+        }
+        .input{border:1px solid #EEE;width:132px;height:28px;background: #F5F5F5;}
+    </style>
+</head>
+<body>
+<!-- 上列表 -->
+{include file="Public/public"/}
+<!-- 上列表 -->
+<div class="main">
+    <!-- 左列表 -->
+    {include file="public/left"/}
+    <!-- 左列表 -->
+    <div class="contend">
+        <form method="post" name="val" action="{:url('User/addCode')}" enctype="multipart/form-data">
+            <div style="align:center;">
+                <div style="text-align: center;"><h1>申请注册码</h1></div><br/>
+                    <!-- <a href="javascript:" class="xx" > x<a> -->
+                <div style="align:center;text-align: center;margin:0 auto;">
+                    <div hidden><span  class="id">创建日期:&nbsp;&nbsp;</span><input type="hidden" name="createTime" class="add1" value=""></div><br/>
+                    <div hidden><span  class="id">注册码:&nbsp;&nbsp;&nbsp;</span><input type="hidden" name="code" class="add1" id="code" value=""/></div><br/>
+                    <div hidden><span  class="id">注册码编号:</span><input type="text" name="coId" class="add1" id="coId" value=""></div><br/>
+                    <div hidden><span  class="id">创&nbsp;建&nbsp;者&nbsp;:&nbsp;&nbsp;&nbsp;</span><input type="text" name="creator" class="add1" value=""></div><br/>
+                    <div><span  class="id">客户公司:&nbsp;&nbsp;</span>
+                        <select name="company" class="add1" style="background-color:  #F5F5F5;border:1px solid;height:28px;margin-left:5px;width: 140px;;">
+                            {volist name="client" id="v"}
+                            <option value="{$v.company}">{$v.company}</option>
+                            {/volist}
+                        </select>
+                    </div><br/>
+                    <div><span  class="id">mac地址:&nbsp;&nbsp;&nbsp;</span><input type="text" name="mac" class="add1" id="mac" value=""></div><br/>
+                    <div><span  class="id">有效日期:&nbsp;&nbsp;</span>
+                        <input type="text" name="expireTime" class="input" value="" id="pickdate" style="border:1px solid grey;">
+                    </div><br/>
+                    <div><span  class="id">备 &nbsp;&nbsp;&nbsp;注:&nbsp;&nbsp;&nbsp;</span>
+                        <textarea   rows="1" cols="3" maxlength="256" placeholder="请输入不超过256个字符" name="other" class="add1" style="margin-left:5px;border:1px solid grey;width:132px;height:28px;max-width:132px;max-height:28px;"></textarea>
+                    </div><br/><br/>
+                    <div>
+                        <button type="submit" class='button1'  style="font-size: 20px;background-color: #F5F5F5;width:80px;">申请</button>
+                        <a  class="button1"  href="{:url('user/listCode')}" style="width:80px;height:28px;">
+                            <input type="button" style="font-size: 20px;background-color: #F5F5F5;width: 80px;line-height: 28px;text-align: center;" value="取消"/>
+                        </a>
+                        <!--<button type="reset" class="button1" style="font-size: 20px;background-color: #F5F5F5;width: 80px;line-height: 28px;text-align: center;" >取消</button>-->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="__JS__/jQuery/jquery-1.12.3.min.js"></script>
+<script src="__JS__/jQuery/datedropper.min.js"></script>
+<script src="__JS__/jQuery/timedropper.min.js"></script>
+<script>
+    $("#pickdate").dateDropper({
+        animate: false,
+        format: 'Y-m-d',
+        maxYear: '2020'
+    });
+</script>
+</body>
+</html>

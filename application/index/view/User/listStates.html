@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>国家管理</title>
+</head>
+<body>
+<!-- 上列表 -->
+{include file="Public/public"/}
+<!-- 上列表 -->
+<div class="main">
+    <!-- 左列表 -->
+    {include file="public/left"/}
+    <!-- 左列表 -->
+    <div class="contend">
+        <div class="mask" name="aboutmask" id="aboutmask" style="display:none">
+            <div class="mask_in mask_in6" style="width:420px;height:260px;">
+                <form method="post" name="val" action="{:url('User/addStates')}" enctype="multipart/form-data">
+                    <h1>添加国家</h1>
+                    <!-- <a href="javascript:" class="xx" > x<a> -->
+
+                    <div class="mask_in1"><span class="sp">国家代码</span><input type="text" name="stId" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">国家名称</span><input type="text" name="state" class="add1" value=""></div><br/>
+                    <div style="text-align: center;height:28px;">
+                        <button type="submit" class='button1'>提交</button>
+                        <button type="reset" class="xx button2">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mask" name="aboutmask" id="aboutmask1" style="display:none">
+            <div class="mask_in mask_in4" style="height:260px;width:420px;">
+                <form method="post" name="val" action="{:url('User/editStates')}"  enctype="multipart/form-data">
+                    <h1>国家信息修改</h1>
+
+                    <div class="mask_in1"><span class="sp">国家代码</span><input type="text" name="stId" class="add1" readonly value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">国家名称</span><input type="text" name="state" class="add1" value=""></div><br/>
+                    <div style="text-align: center;height:28px;">
+                        <button type="submit" class='button1'>提交</button>
+                        <button type="reset" class="xx button2">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <h1>国家管理</h1><br>
+        <div class="zoom_clear" style="float: left;">
+            <div id="add" class="add" onclick="showloan()">添加国家</div>
+        </div><br><br><br>
+        <!-- 搜索框内容 -->
+        {include file="user/searchStates"/}
+        <!-- 搜索框内容 -->
+
+        <table class="mod-table" cellspacing="0" cellpadding="0" style="width: 98%;">
+            <thead>
+            <tr>
+                <th><input type="text" value="国家代码" class="tdInput"/></th>
+                <th><input type="text" value="国家名称" class="tdInput"/></th>
+                <th><input type="text" value="操作" class="tdInput"/></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {volist name='states' id='v'}
+            <tr class="td-color">
+                <td><input type="text" value="{$v.stId}" name="stId" style="text-align: center;"/></td>
+                <td><input type="text" value="{$v.state}" name="state" style="text-align: center;"/></td>
+                <td class="operating">
+                    <a href="javascript:void (0);" onclick=update("{$v['stId']}")><input type="text" value="修改" class="update"/></a>|
+                    <a href="javascript:void (0);" onclick=confirmDel("{$v['stId']}")><input type="text" value="删除" class="update"/></a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        <div  class="page-list zoom_clear pagination">
+            {$page}
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script>
+    function update(stId){
+        //var stId;
+        //console.log(stId);
+        $.post("{:url('User/states')}",{stId:stId},function(data){
+       //console.log(data);
+            if(data) {
+          //  console.log(data['id']);
+                $("input[name='stId']").val(data[0].stId)
+                $("input[name='state']").val(data[0].state)
+            }
+        },'json');
+        $('#aboutmask1').show();
+    }
+    $('.xx').click(function(){
+        $('#aboutmask1').hide();
+        window.location.reload();
+    });
+    $(document).ready(function(){
+        //赋值高度
+        var height = $(window).height();
+        var headHeight = $(".head").innerHeight();
+        var mainHeight = height - headHeight;
+        $(".main").css("height",mainHeight);
+    });
+
+    function showloan(stId){
+        $('#aboutmask').show();
+    }
+    $('.xx').click(function(){
+        $('#aboutmask').hide();
+        window.location.reload();
+    });
+    function confirmDel(stId) {
+        //var stId=document.write(encodeURIComponent(stId));
+        //console.log(stId);
+        if(confirm('确定删除这个国家吗？')){
+            return location.href="deleteStates?stId="+stId;
+        }else{
+            return false;
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册码信息</title>
+    <style>
+        .id{
+            width:100px;
+            height:30px;
+            font-size: 18px;
+        }
+        .code{
+            width: 400px;;
+            height:30px;
+            font-size: 18px;
+            border:1px solid grey;
+        }
+    </style>
+</head>
+<body>
+{include file="public/public"/}
+<div class="main">
+    {include file="public/left"}
+    <div class="contend">
+        <form method="post" name="val" action="{:url('user/code')}"  enctype="multipart/form-data">
+            <div style="text-align:center;height:600px;">
+                <div style="text-align: center;"><h1>获取的注册码</h1></div><br/>
+                <div><input type="text" class="id" value="注册码编号:"/><input type="text" name="coId" class="code" readonly id="coId" value="{$code.coId}"></div><br/>
+                <div><input type="text" class="id" value="客户公司:"/><input type="text" name="company" class="code" readonly id="company" value="{$code.company}"></div><br/>
+                <div><input type="text" class="id" value="mac地址:"/><input type="text" name="mac" class="code" id="mac" readonly value="{$code.mac}"></div><br/>
+                <div><input type="text" class="id" value="创建者:"/><input type="text" name="creator" class="code" readonly value="{$code.creator}"></div><br/>
+                <div><input type="text" class="id" value="创建日期:"/><input type="text" name="createTime" class="code" readonly value="{$code.createTime}"></div><br/>
+                <div><input type="text" class="id" value="有效日期:"/><input type="text" name="expireTime" class="code" readonly id="expireTime" value="{$code.expireTime}"></div><br/>
+                <div><input type="text" class="id" value="注册码:"/><input type="text" name="code" class="code" id="code" readonly value="{$code.code}"/></div><br/>
+                <div  style="font-size: 18px;height: 30px;text-align: center;">
+                    <a href="{:url('user/listcode')}" style="text-decoration: underline;">点击返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

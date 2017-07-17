@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册码管理</title>
+
+</head>
+<body>
+<!-- 上列表 -->
+{include file="Public/public"/}
+<!-- 上列表 -->
+<div class="main">
+    <!-- 左列表 -->
+    {include file="public/left"/}
+    <!-- 左列表 -->
+    <div class="contend">
+        <!--
+        <div class="mask" name="aboutmask" id="aboutmask" style="display:none">
+            <div class="mask_in mask_in6" style="width:520px;height:700px;">
+                <form method="post" name="val" action="{:url('User/addCode')}" enctype="multipart/form-data">
+                    <h1>申请注册码</h1>
+                    &lt;!&ndash; <a href="javascript:" class="xx" > x<a> &ndash;&gt;
+                    <div class="mask_in1" hidden><span class="sp">创建日期</span><input type="hidden" name="createTime" class="add1" value=""></div><br/>
+                    <div class="mask_in1" hidden><span class="sp">注册码</span><input type="hidden" name="code" class="add1" id="code" value=""/></div><br/>
+                    <div class="mask_in1"><span class="sp">注册码编号</span><input type="text" name="coId" class="add1" id="coId" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">客户公司</span>&nbsp;&nbsp;
+                        <select name="company" class="add1" style="background-color:  #F5F5F5;border:1px solid;height:28px;margin-left:5px;width: 140px;;">
+                            {volist name="client" id="v"}
+                            <option value="{$v.company}">{$v.company}</option>
+                            {/volist}
+                        </select>
+                    </div><br/>
+                    <div class="mask_in1"><span class="sp">mac地址</span><input type="text" name="mac" class="add1" id="mac" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">创建者</span><input type="text" name="creator" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">有效日期</span>
+                        <input type="text" name="expireTime"  id="datetimepicker" value="">
+                    </div><br/><br/>
+                    <div style="text-align: center;">
+                        <button type="submit" class='button1' id="button">提交</button>
+                        <span class="xx button2">取消</span>
+                    </div>
+                </form>
+            </div>
+        </div>-->
+ <!--<div class="mask" name="aboutmask" id="aboutmask1" style="display:none;">
+            <div class="mask_in mask_in6" style="width:420px;height:450px;">
+                <form method="post" name="val" action=""  enctype="multipart/form-data">
+                    <h1>注册码信息</h1>
+                    <input type="hidden" name="coId" class="add1" value="">
+
+                    <div class="mask_in1"><span class="sp">客户公司</span>&nbsp;&nbsp;
+                        <select name="company" class="add1" style="background-color:  #F5F5F5;border:1px solid;height:28px;margin-left:5px;width: 190px;;">
+                            {volist name="client" id="v"}
+                            <option value="{$v.company}" name="">{$v.company}</option>
+                            {/volist}
+                        </select>
+                    </div><br/>
+                    <div class="mask_in1"><span class="sp">mac住址</span><input type="text" name="mac" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">创建者</span><input type="text" name="creator" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">创建日期</span><input type="text" name="createTime" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">有效日期</span><input type="text" name="expireTime" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">注册码</span><input type="text" name="code" class="add1" value=""></div><br/>
+                    <button type="submit" class='button1'>提交</button>
+                    <span class="xx button2">取消</span>
+                </form>
+            </div>
+        </div>-->
+        <h1>注册码管理</h1><br>
+        <div class="zoom_clear" style="float: left;">
+            <div id="add" class="add" ><a href="{:url('user/add')}" style="color:white;">申请注册码</a></div>
+        </div>
+        <div class="zoom_clear" style="float: left;margin-left: 10px;">
+            <div class="add" style="width:180px;"><a href="{:url('User/soonExpireCode')}" style="color:white;">查询即将失效的注册码</a></div>
+        </div><br><br><br>
+
+        <!-- 搜索框内容 -->
+        {include file="user/searchCode"/}
+       <!-- 搜索框内容 -->
+
+        <table class="mod-table" cellspacing="0" cellpadding="0" style="width: 98%;">
+            <thead>
+            <tr>
+                <th><input type="text" value="注册码编号" class="tdInput"/></th>
+                <th><input type="text" value="所属公司" class="tdInput"/></th>
+                <th><input type="text" value="mac地址" class="tdInput"/></th>
+                <th><input type="text" value="创建者" class="tdInput"/></th>
+                <th><input type="text" value="创建日期" class="tdInput"/></th>
+                <th><input type="text" value="有效日期" class="tdInput"/></th>
+                <th><input type="text" value="注册码" class="tdInput"/></th>
+                <th><input type="text" value="备注" class="tdInput"/></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {volist name='code' id='v'}
+                <tr class="td-color">
+                    <td><input type="text" value="{$v.coId}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.company}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.mac}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.creator}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.createTime}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.expireTime}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.code}" style="text-align: center;padding: 0px;width: 280px;"/></td>
+                    <td><input type="text" value="{$v.other}" style="text-align: center;padding: 0px;width: 280px;"/></td>
+                </tr>
+           {/volist}
+            </tbody>
+        </table>
+
+        <!-- 分页 -->
+       <div  class="page-list zoom_clear pagination">
+             {$page}
+       </div>
+        <!--分页-->
+
+    </div>
+</div>
+</div>
+
+</body>
+
+<script>
+    function update(coId){
+        //console.log(coId);
+        $.post("{:url('code')}",{coId:coId},function(data){
+//            console.log(data);
+            if(data) {
+//                console.log(data['coId']);
+                $("input[name='coId']").val(data[0].coId)
+                $("input[name='company']").val(data[0].company)
+                $("input[name='mac']").val(data[0].mac)
+                $("input[name='creator']").val(data[0].creator)
+                $("input[name='createTime']").val(data[0].createTime)
+                $("input[name='expireTime']").val(data[0].expireTime)
+                $("input[name='code']").val(data[0].code)
+            }
+        },'json');
+        $('#aboutmask1').show();
+    }
+    $('.xx').click(function(){
+        $('#aboutmask1').hide();
+    });
+    $(document).ready(function(){
+        //赋值高度
+        var height = $(window).height();
+        var headHeight = $(".head").innerHeight();
+        var mainHeight = height - headHeight;
+        $(".main").css("height",mainHeight);
+    });
+
+    function add(){
+        if(confirm("确定申请注册码吗？")){
+            //$('#aboutmask').show();
+            //return true;
+            return location.href = 'add';
+        }else{
+            return false;
+        }
+    }
+    $('.xx').click(function(){
+        $('#aboutmask').hide();
+    });
+    /*
+    * 提交之后获得注册码（接口调用参数是申请时添加的）
+    * */
+
+
+
+</script>
+</html>

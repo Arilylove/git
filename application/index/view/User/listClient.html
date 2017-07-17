@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客户管理</title>
+</head>
+<body>
+<!-- 上列表 -->
+{include file="Public/public"/}
+<!-- 上列表 -->
+<div class="main">
+    <!-- 左列表 -->
+    {include file="public/left"/}
+    <!-- 左列表 -->
+    <div class="contend">
+
+        <!-- 添加信息 -->
+        <div class="mask" name="aboutmask" id="aboutmask" style="display:none;">
+            <div class="mask_in mask_in6" style="width:400px;height:460px;">
+                <form method="post" name="val" action="{:url('User/addClient')}" enctype="multipart/form-data">
+                    <h1>添加客户</h1>
+                    <!-- <a href="javascript:" class="xx" > x<a> -->
+                    <!--<div class="mask_in1"><span class="sp">客户编号</span><input type="text" name="cliId" class="add1" value=""></div><br/>-->
+                    <div class="mask_in1"><span class="sp">国家</span>&nbsp;&nbsp;
+                        <select name="state" class="add1" style="background-color:  #F5F5F5;border:1px solid;height:28px;margin-left:5px;width: 178px;;">
+                            {volist name="states" id="v"}
+                            <option value="{$v.state}">{$v.state}</option>
+                            {/volist}
+                        </select>
+                    </div><br/>
+                    <div class="mask_in1"><span class="sp">公司</span><input type="text" name="company" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">联系人</span><input type="text" name="contacts" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">电话</span><input type="text" name="phone" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">email</span><input type="text" name="email" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">备注&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <textarea  rows="1" cols="3" maxlength="256" placeholder="请输入不超过256个字符" name="app" class="add1" style="margin-left:5px;border:1px solid grey;width:180px;height:28px;max-width:180px;max-height:28px;">
+                        </textarea></div><br/>
+                    <div style="text-align: center;height:28px;">
+                        <button type="submit" class='button1'>提交</button>
+                        <button type="reset" class="xx button2">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 添加信息 -->
+
+       <!-- 修改信息 -->
+        <div class="mask" name="aboutmask" id="update" style="display:none;">
+            <div class="mask_in mask_in4" style="height:410px;width: 410px;">
+                <form method="post" name="val" action="{:url('User/editClient')}"  enctype="multipart/form-data">
+                    <h1>客户信息修改</h1>
+                    <input type="hidden" name="cliId" class="add1" value="">
+
+                    <div class="mask_in1"><span class="sp">国家</span>&nbsp;&nbsp;
+                        <select name="state" class="add1" style="background-color:#F5F5F5;border:1px solid;height:28px;margin-left:5px;width: 180px;;">
+                            {volist name="states" id="v"}
+                            <option value="{$v.state}" name="state">{$v.state}</option>
+                            {/volist}
+                        </select>
+                    </div><br/>
+                    <div class="mask_in1"><span class="sp">公司</span><input type="text" name="company" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">联系人</span><input type="text" name="contacts" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">电话</span><input type="text" name="phone" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">email</span><input type="text" name="email" class="add1" value=""></div><br/>
+                    <div class="mask_in1"><span class="sp">备注&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <textarea  rows="1" cols="3" maxlength="256" placeholder="请输入不超过256个字符" name="app" class="add1" style="margin-left:5px;border:1px solid grey;width:180px;height:28px;max-width:180px;max-height:28px;">
+                        </textarea></div><br/>
+                    <div style="text-align: center;height:28px;">
+                        <button type="submit" class='button1'>提交</button>
+                        <button type="reset" class="xx button2">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 修改信息 -->
+
+        <!-- 信息列表 -->
+        <h1>客户管理</h1><br>
+        <div class="zoom_clear" style="float: left;">
+            <div id="add" class="add" onclick="add()">添加客户</div>
+        </div><br><br><br>
+
+        <!-- 搜索框内容 -->
+        {include file="user/searchClient"/}
+        <!-- 搜索框内容 -->
+
+        <table class="mod-table" cellspacing="0" cellpadding="0" style="width: 98%;">
+            <thead>
+            <tr>
+                <th><input type="text" value="客户编号" class="tdInput"/></th>
+                <th><input type="text" value="国家" class="tdInput"/></th>
+                <th><input type="text" value="公司" class="tdInput"/></th>
+                <th><input type="text" value="联系人" class="tdInput"/></th>
+                <th><input type="text" value="电话" class="tdInput"/></th>
+                <th><input type="text" value="email" class="tdInput"/></th>
+                <th><input type="text" value="备注" class="tdInput"/></th>
+                <th><input type="text" value="操作" class="tdInput"/></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {volist name='client' id='v'}
+                <tr class="td-color">
+                    <td><input type="text" value="{$v.cliId}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.state}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.company}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.contacts}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.phone}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.email}" style="text-align: center;"/></td>
+                    <td><input type="text" value="{$v.app}" style="text-align: center;padding: 0px;width: 280px;"/></td>
+                    <td class="operating">
+                        <a href="javascript:void(0);" onclick=update("{$v['cliId']}")><input type="text" value="修改" class="update"/></a>|
+                        <a href="javascript:void(0);" onclick=confirmDel("{$v['cliId']}")><input type="text" value="删除" class="update"/></a>
+                    </td>
+                </tr>
+            {/volist}
+            </tbody>
+        </table>
+        <!-- 信息列表 -->
+
+        <!-- 分页 -->
+        <div  class="page-list zoom_clear pagination">
+            {$page}
+        </div>
+        <!-- 分页 -->
+
+    </div>
+</div>
+</div>
+
+</body>
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script>
+    function update(cliId){
+        //console.log(id);
+        $.post("{:url('User/client')}",{cliId:cliId},function(data){
+        // console.log(data);
+            if(data) {
+         //console.log(data['cliId']);
+                $("input[name='cliId']").val(data[0].cliId)
+                $("input[name='company']").val(data[0].company)
+                $("input[name='contacts']").val(data[0].contacts)
+                $("input[name='phone']").val(data[0].phone)
+                $("input[name='email']").val(data[0].email)
+                $("textarea[name='app']").val(data[0].app)
+            }
+        },'json');
+        $('#update').show();
+    }
+    $('.xx').click(function(){
+        $('#update').hide();
+        window.location.reload();
+    });
+    $(document).ready(function(){
+        //赋值高度
+        var height = $(window).height();
+        var headHeight = $(".head").innerHeight();
+        var mainHeight = height - headHeight;
+        $(".main").css("height",mainHeight);
+    });
+
+    function add(){
+        $('#aboutmask').show();
+    }
+    $('.xx').click(function(){
+        $('#aboutmask').hide();
+        window.location.reload();
+    });
+    function confirmDel(cliId) {
+        if(confirm('确定删除这个客户吗？')){
+            return location.href="deleteClient?cliId="+cliId;
+        }else{
+            return false;
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!-- 搜索框内容 -->
+<div style="float:right;">
+    <form action="{:url('User/listStates')}" method="post">
+        <ul class="nav">
+            <li id="search" style="border: 1px solid #C2C2C2;">
+                <input type="text" name="search_text" id="search_text" placeholder="请输入搜索内容"/>
+                <button type="submit" name="search_button" id="search_button"><img src="__IMG__/4.png"></button>
+            </li>
+            <li style="border: 1px solid #C2C2C2;height:28px;">
+                <select class="subnav" name="sel">
+                    <option value="stId" name="stId">按国家代码搜索</option>
+                    <option value="state" name="state">按国家名称搜索</option>
+                </select>
+            </li>
+        </ul>
+    </form>
+</div>
+</div>
+<!-- 搜索框内容 -->
+</body>
+</html>

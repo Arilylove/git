@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!-- 搜索框内容 -->
+<div style="float:right;">
+    <ul class="nav">
+        <li id="search" style="border: 1px solid #C2C2C2;">
+            <form action="{:url('Base/search')}" method="post">
+                <input type="text" name="search_text" id="search_text" placeholder="请输入搜索内容"/>
+                <button type="submit" name="search_button" id="search_button"><img src="__IMG__/4.png"></button>
+            </form>
+        </li>
+        {if condition="$status eq 0"}
+        <li  style="border: 1px solid #C2C2C2;height:28px;" >
+            <select class="subnav" id="sel" name="sel">
+                <option value="adId" name="adId" selected label="按用户编号搜索"></option>
+                <option value="username" name="username" label="按用户名搜索"></option>
+                <option value="surname" name="surname" label="按姓名搜索"></option>
+                <option value="status" name="status" label="按用户权限搜索"></option>
+            </select>
+        </li>
+        {elseif condition="$action eq 'listClient'"}
+        <li style="border: 1px solid #C2C2C2;height:28px;">
+            <select class="subnav" name="sel">
+                {volist name="client" id="v"}
+                <option value="{$v.cliId}" name="cliId">按客户编号搜索</option>
+                <option value="{$v.state}" name="state">按国家搜索</option>
+                <option value="{$v.company}" name="company">按公司搜索</option>
+                <option value="{$v.contacts}" name="contacts">按联系人搜索</option>
+                <option value="{$v.phone}" name="phone">按联系方式搜索</option>
+                <option value="{$v.email}" name="email">按email搜索</option>
+                <option value="{$v.app}" name="app">按app搜索</option>
+                {/volist}
+            </select>
+        </li>
+        {elseif condition="$action eq 'listCode'"}
+        <li style="border: 1px solid #C2C2C2;height:28px;">
+            <select class="subnav" name="sel">
+                {volist name="code" id="v"}
+                <option value="{$v.coId}" name="coId">注册码编号搜索</option>
+                <option value="{$v.company}" name="company">按客户公司搜索</option>
+                <option value="{$v.mac}" name="mac">按mac地址搜索</option>
+                <option value="{$v.creator}" name="creator">按创建者搜索</option>
+                <option value="{$v.createTime}" name="createTime">按创建时间搜索</option>
+                {/volist}
+            </select>
+        </li>
+        {else/}
+        <li style="border: 1px solid #C2C2C2;height:28px;">
+            <select class="subnav" name="sel">
+                {volist name="states" id="v"}
+                <option value="{$v.stId}" name="stId">按国家代码搜索</option>
+                <option value="{$v.state}" name="state">按国家名称搜索</option>
+                {/volist}
+            </select>
+        </li>
+        {/if}
+    </ul>
+</div>
+</div>
+<!-- 搜索框内容 -->
+<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
