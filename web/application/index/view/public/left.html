@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul class="body-left" style="overflow-y: auto;">
+    {if condition="$status eq 0"}
+    <li class="list1">
+        <a href="javascript:;">
+            <img src="__IMG__/sj.png" alt="">用户管理
+        </a>
+        <ul>
+            <li><a href="{:url('Admin/listAdmin')}">用户管理</a></li>
+            <li>33</li>
+        </ul>
+    </li>
+    {else/}
+    <li class="list1">
+        <a href="javascript:;">
+            <img src="__IMG__/sj.png" alt="">国家管理
+        </a>
+        <ul>
+            <li><a href="{:url('User/listStates')}">国家管理</a></li>
+            <li>33列表</li>
+        </ul>
+    </li>
+    <li class="list1">
+        <a href="javascript:;">
+            <img src="__IMG__/sj.png" alt="">客户管理
+        </a>
+        <ul>
+            <li><a href="{:url('User/listClient')}">客户管理</a></li>
+            <li>22信息</li>
+        </ul>
+    </li>
+    <li class="list1">
+        <a href="javascript:;">
+            <img src="__IMG__/sj.png" alt="">注册码管理
+        </a>
+        <ul>
+            <li><a href="{:url('User/listCode')}">注册码管理</a></li>
+            <li><a href="{:url('User/soonExpireCode')}">即将失效的注册码</a></li>
+            <li><a href="{:url('User/expireCode')}">已经失效的注册码</a></li>
+        </ul>
+    </li>
+    {/if}
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>head</title>
+    <link rel="stylesheet" href="__CSS__/index.css">
+    <link rel="stylesheet" href="__CSS__/common.css">
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/other.css">
+    <script src="__JS__/jquery.js"></script>
+</head>
+<body>
+<!--头部-->
+<header>
+    <img class="logo" src="__IMG__/logo.png" alt="">
+    <!--欢迎登录-->
+    <div class="welcome">
+        <div class="wel-img-box">
+            <img src="__IMG__/head.png" alt="">
+        </div>
+        <p><span>{$username}</span>，欢迎登录！</p>
+        <!--下拉信息-->
+        <div class="wel-down">
+            <a href="javascript:;" class="owninfo">
+                <span class="iconfont">&#xe663;</span>
+                修改个人信息
+            </a>
+            <a href="javascript:;" class="pass">
+                <span class="iconfont">&#xe663;</span>
+                修改密码
+            </a>
+            <a href="javascript:;" class="lout">
+                <span class="iconfont">&#xe622;</span>
+                退出登录
+            </a>
+        </div>
+    </div>
+    <!--修改密码-->
+    <div id="alert-pass-update">
+    <form method="post" action="{:url('Base/updatePassword')}" enctype="multipart/form-data">
+        <div class="alert-title-update">
+            <span>修改密码</span>
+            <div class="alert-close" style="top:15px;">
+                <img src="__IMG__/close.png" alt="">
+            </div>
+        </div>
+        <label class="alert-con">
+            <span>用户名：</span>
+            <input type="text" name="username" value="{$username}" readonly>
+        </label>
+        <label class="alert-con">
+            <span>初始密码：</span>
+            <input type="text" name="password" value="">
+        </label>
+        <label class="alert-con">
+            <span>修改密码：</span>
+            <input type="text" name="update" value="">
+        </label>
+        <label class="alert-con">
+            <span>确认修改：</span>
+            <input type="text" name="confirm" value="">
+        </label>
+        <div class="alert-btn">
+            <button type="submit" class="alert-sure">确定</button>
+            <span class="alert-cancel">取消</span>
+        </div>
+    </form>
+    </div>
+    <!--修改个人信息-->
+    <div id="alert-owninfo-update">
+        <form method="post" action="{:url('Base/updateOwnInfo')}" enctype="multipart/form-data" style="height:240px;">
+            <div class="alert-title-update">
+                <span>修改个人信息</span>
+                <div class="alert-close" style="top:15px;">
+                    <img src="__IMG__/close.png" alt="">
+                </div>
+            </div>
+            <label class="alert-con">
+                <span>用户名：</span>
+                <input type="text" name="username" value="{$username}" readonly>
+            </label>
+            <label class="alert-con">
+                <span>用户姓名：</span>
+                <input type="text" name="surname" value="">
+            </label>
+            <div class="alert-btn">
+                <button type="submit" class="alert-sure">确定</button>
+                <span class="alert-cancel">取消</span>
+            </div>
+        </form>
+    </div>
+</header>
+<!--退出登录 弹框-->
+<div class="logout">
+    <form  method="post" action="{:url('Login/out')}" enctype="multipart/form-data">
+        <div id="logout">
+            <div class="ltitle">温馨提示</div>
+            <div class="lcon">
+                <img src="__IMG__/tanhao.png" alt="">
+                <p>确定退出？</p>
+            </div>
+            <div class="alert-btn">
+                <button type="submit" class="alert-sure">确定</button>
+                <span class="alert-cancel">取消</span>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    $(function(){
+        $(".pass").click(function () {
+            $("#alert-pass-update").css("display","block")
+        })
+        $(".owninfo").click(function () {
+            $("#alert-owninfo-update").css("display","block")
+        })
+    });
+
+</script>
+</html>

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>客户管理</title>
+    <link rel="stylesheet" href="__CSS__/index.css">
+    <link rel="stylesheet" href="__CSS__/common.css">
+    <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <script src="__JS__/jquery.js"></script>
+    <style>
+        .select{
+            width: 178px;
+            height: 34px;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+<!--头部-->
+{include file="public/head"/}
+<!--身体-->
+<div class="body-box">
+    <!--左部导航-->
+    {include file="public/left"/}
+    <!--右部展示-->
+    <div class="body-right" style="overflow-y: auto;">
+        <div id="right" style="width: 100%;height: 100%">
+            <div id="main">
+                <div id="toolbar">
+                    <div class="class-input">
+                        <span>编号：</span>
+                        <input type="text">
+                    </div>
+                    <div class="class-input">
+                        <span>用户名：</span>
+                        <input type="text">
+                    </div>
+                    <div class="class-input">
+                        <span>姓名：</span>
+                        <input type="text">
+                    </div>
+                    <div class="class-input">
+                        <span>日期：</span>
+                        <input type="text">
+                    </div>
+                    <div class="class-btn class-select">查询</div>
+                </div>
+                <div class="class-btn class-add">增加</div>
+                <!--列表-->
+                <div class="container-fluid">
+                    <table class="table table-bordered table-striped ">
+                        <tr>
+                            <th>客户编号</th>
+                            <th>国家</th>
+                            <th>公司</th>
+                            <th>联系人</th>
+                            <th>电话</th>
+                            <th>email</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                        {volist name='client' id='v'}
+                        <tr>
+                            <td>{$v.cliId}</td>
+                            <td>{$v.state}</td>
+                            <td>{$v.company}</td>
+                            <td>{$v.contacts}</td>
+                            <td>{$v.phone}</td>
+                            <td>{$v.email}</td>
+                            <td>{$v.app}</td>
+                            <td>
+                                <div class="class-btn class-update">
+                                    <a href="javascript:void (0);" onclick=update("{$v['cliId']}") style="color:white;">修改</a>
+                                </div>
+                                <div class="class-btn class-del">
+                                    <a href="javascript:void (0);" onclick=confirmDel("{$v['cliId']}") style="color:white;">删除</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                </div>
+            </div>
+            <!-- 新增 -->
+            <div id="alert-box">
+                <form method="post" name="val" action="{:url('User/addClient')}" enctype="multipart/form-data" style="height:480px;">
+
+                    <div class="alert-title">
+                        <span>添加客户</span>
+                        <div class="alert-close">
+                            <img src="__IMG__/close.png" alt="">
+                        </div>
+                    </div>
+                    <input type="hidden" name="password" class="add1" value="123456">
+                    <label class="alert-con">
+                        <span>国家：</span>
+                        <select name="state" class="select">
+                            {volist name="states" id="v"}
+                            <option value="{$v.state}">{$v.state}</option>
+                            {/volist}
+                        </select>
+                    </label>
+                    <label class="alert-con">
+                        <span>公司：</span>
+                        <input type="text" name="company">
+                    </label>
+                    <label class="alert-con">
+                        <span>联系人：</span>
+                        <input type="text" name="contacts">
+                    </label>
+                    <label class="alert-con">
+                        <span>电话：</span>
+                        <input type="text" name="phone">
+                    </label>
+                    <label class="alert-con">
+                        <span>email：</span>
+                        <input type="text" name="email">
+                    </label>
+                    <label class="alert-con">
+                        <span>备注：</span>
+                        <textarea  rows="1" cols="3" maxlength="256" placeholder="请输入不超过256个字符" name="app" style="margin-left:5px;border:1px solid grey;width:180px;height:28px;max-width:180px;max-height:28px;">
+                        </textarea>
+                    </label>
+                    <div class="alert-btn">
+                        <button type="submit" class="alert-sure">确定</button>
+                        <span class="alert-cancel">取消</span>
+                    </div>
+                </form>
+            </div>
+            <!--删除 弹框-->
+            <div class="delete">
+                <form method="post" action="{:url('User/deleteClient')}" enctype="multipart/form-data">
+                    <input hidden type="text" name="cliId" value="">
+                    <div id="delete">
+                        <div class="ltitle">温馨提示</div>
+                        <div class="lcon">
+                            <img src="__IMG__/jinggao.png" alt="">
+                            <p>确定删除?</p>
+                        </div>
+                        <div class="alert-btn">
+                            <button type="submit" class="alert-sure">确定</button>
+                            <span class="alert-cancel">取消</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 修改 -->
+            <div id="alert-box-update">
+                <form method="post" action="{:url('User/editClient')}" enctype="multipart/form-data" style="height:480px;">
+                    <div class="alert-title-update">
+                        <span>修改客户信息</span>
+                        <div class="alert-close">
+                            <img src="__IMG__/close.png" alt="">
+                        </div>
+                    </div>
+                    <input type="hidden" name="cliId" class="add1" value="">
+                    <label class="alert-con">
+                        <span>国家：</span>
+                        <select name="state" class="select" value="">
+                            {volist name="states" id="v"}
+                            <option value="{$v.state}">{$v.state}</option>
+                            {/volist}
+                        </select>
+                    </label>
+                    <label class="alert-con">
+                        <span>公司：</span>
+                        <input type="text" name="company" value="">
+                    </label>
+                    <label class="alert-con">
+                        <span>联系人：</span>
+                        <input type="text" name="contacts" value="">
+                    </label>
+                    <label class="alert-con">
+                        <span>电话：</span>
+                        <input type="text" name="phone" value="">
+                    </label>
+                    <label class="alert-con">
+                        <span>email：</span>
+                        <input type="text" name="email" value="">
+                    </label>
+                    <label class="alert-con">
+                        <span>备注：</span>
+                        <textarea  rows="1" cols="3" maxlength="256" placeholder="请输入不超过256个字符" name="app" style="margin-left:5px;border:1px solid grey;width:180px;height:28px;max-width:180px;max-height:28px;" value="">
+                        </textarea>
+                    </label>
+                    <div class="alert-btn">
+                        <button type="submit" class="alert-sure">确定</button>
+                        <span class="alert-cancel">取消</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--底部-->
+    {include file="public/foot"/}
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $(".list1 > a ").click(function(){
+            $(this).toggleClass("act");
+            $(this).find("img").toggleClass("active");
+            $(this).siblings().stop().slideToggle().end().parent().siblings().find("ul").slideUp();
+            $(this).parent().siblings().find("a img").removeClass("active");
+            $(this).parent().siblings().find("a").removeClass("act");
+        });
+        $(".class-add").click(function () {
+            $("#alert-box").css("display","block")
+        })
+        $(".alert-close").click(function () {
+            $("#alert-box").css("display","none")
+            $("#alert-box-update").css("display","none")
+            $("#alert-pass-update").css("display","none")
+            $("#alert-owninfo-update").css("display","none")
+        })
+        $(".alert-cancel").click(function () {
+            $("#alert-box").css("display","none")
+            $("#alert-box-update").css("display","none")
+        })
+        $(".lout").click(function () {
+            $(".logout").css("display","block")
+        })
+        $(".lbtn").click(function () {
+            $(".logout").css("display","none")
+            $(".delete").css("display","none")
+        })
+        $(".cbtn").click(function () {
+            $(".delete").css("display","none")
+        })
+        $(".class-del").click(function () {
+            $(".delete").css("display","block")
+        })
+        $(".class-update").click(function () {
+            $("#alert-box-update").css("display","block")
+        })
+    })
+    function update(cliId){
+        //console.log(cliId);
+        $.post("{:url('client')}",{cliId:cliId},function(data){
+            //console.log(data);
+            if(data) {
+                //console.log(data['cliId']);
+                $("input[name='company']").val(data[0].company)
+                $("input[name='contacts']").val(data[0].contacts)
+                $("input[name='phone']").val(data[0].phone)
+                $("input[name='email']").val(data[0].email)
+                $("textarea[name='app']").val(data[0].app)
+            }
+        },'json');
+    }
+    $('.alert-cancel').click(function(){
+        $('#alert-box-update').hide();
+        window.location.reload();  //自动刷新本页面
+    });
+    function confirmDel(cliId) {
+        $.post("{:url('client')}",{cliId:cliId},function(data){
+            //console.log(data);
+            if(data) {
+                //console.log(data['cliId']);
+                $("input[name='cliId']").val(data[0].cliId)
+            }
+        },'json');
+    }
+</script>
+
+
+
