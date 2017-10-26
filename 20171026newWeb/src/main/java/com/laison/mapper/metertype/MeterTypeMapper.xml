@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.metertype.MeterTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.metertype.MeterType" >
+    <id column="meter_type_code" property="meterTypeCode" jdbcType="BIGINT" />
+    <result column="meter_type_name" property="meterTypeName" jdbcType="VARCHAR" />
+    <result column="measure_mode" property="measureMode" jdbcType="INTEGER" />
+    <result column="pulse_decimal_places" property="pulseDecimalPlaces" jdbcType="INTEGER" />
+    <result column="price_decimal_places" property="priceDecimalPlaces" jdbcType="INTEGER" />
+    <result column="measure_decimal_places" property="measureDecimalPlaces" jdbcType="INTEGER" />
+    <result column="q3" property="q3" jdbcType="DECIMAL" />
+    <result column="medium_type" property="mediumType" jdbcType="INTEGER" />
+    <result column="communication_type" property="communicationType" jdbcType="INTEGER" />
+    <result column="lcd_type" property="lcdType" jdbcType="INTEGER" />
+    <result column="currency_symbol" property="currencySymbol" jdbcType="INTEGER" />
+    <result column="k_flag" property="kFlag" jdbcType="BIT" />
+    <result column="current_detection_flag" property="currentDetectionFlag" jdbcType="BIT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    meter_type_code, meter_type_name, measure_mode, pulse_decimal_places, price_decimal_places, 
+    measure_decimal_places, q3, medium_type, communication_type, lcd_type, currency_symbol, 
+    k_flag, current_detection_flag, create_date, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.metertype.MeterTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from meter_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from meter_type
+    where meter_type_code = #{meterTypeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from meter_type
+    where meter_type_code = #{meterTypeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.metertype.MeterTypeExample" >
+    delete from meter_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.metertype.MeterType" >
+    insert into meter_type (meter_type_code, meter_type_name, measure_mode, 
+      pulse_decimal_places, price_decimal_places, 
+      measure_decimal_places, q3, medium_type, 
+      communication_type, lcd_type, currency_symbol, 
+      k_flag, current_detection_flag, create_date, 
+      state)
+    values (#{meterTypeCode,jdbcType=BIGINT}, #{meterTypeName,jdbcType=VARCHAR}, #{measureMode,jdbcType=INTEGER}, 
+      #{pulseDecimalPlaces,jdbcType=INTEGER}, #{priceDecimalPlaces,jdbcType=INTEGER}, 
+      #{measureDecimalPlaces,jdbcType=INTEGER}, #{q3,jdbcType=DECIMAL}, #{mediumType,jdbcType=INTEGER}, 
+      #{communicationType,jdbcType=INTEGER}, #{lcdType,jdbcType=INTEGER}, #{currencySymbol,jdbcType=INTEGER}, 
+      #{kFlag,jdbcType=BIT}, #{currentDetectionFlag,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.metertype.MeterType" >
+    insert into meter_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meterTypeCode != null" >
+        meter_type_code,
+      </if>
+      <if test="meterTypeName != null" >
+        meter_type_name,
+      </if>
+      <if test="measureMode != null" >
+        measure_mode,
+      </if>
+      <if test="pulseDecimalPlaces != null" >
+        pulse_decimal_places,
+      </if>
+      <if test="priceDecimalPlaces != null" >
+        price_decimal_places,
+      </if>
+      <if test="measureDecimalPlaces != null" >
+        measure_decimal_places,
+      </if>
+      <if test="q3 != null" >
+        q3,
+      </if>
+      <if test="mediumType != null" >
+        medium_type,
+      </if>
+      <if test="communicationType != null" >
+        communication_type,
+      </if>
+      <if test="lcdType != null" >
+        lcd_type,
+      </if>
+      <if test="currencySymbol != null" >
+        currency_symbol,
+      </if>
+      <if test="kFlag != null" >
+        k_flag,
+      </if>
+      <if test="currentDetectionFlag != null" >
+        current_detection_flag,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meterTypeCode != null" >
+        #{meterTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="meterTypeName != null" >
+        #{meterTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="measureMode != null" >
+        #{measureMode,jdbcType=INTEGER},
+      </if>
+      <if test="pulseDecimalPlaces != null" >
+        #{pulseDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="priceDecimalPlaces != null" >
+        #{priceDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="measureDecimalPlaces != null" >
+        #{measureDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="q3 != null" >
+        #{q3,jdbcType=DECIMAL},
+      </if>
+      <if test="mediumType != null" >
+        #{mediumType,jdbcType=INTEGER},
+      </if>
+      <if test="communicationType != null" >
+        #{communicationType,jdbcType=INTEGER},
+      </if>
+      <if test="lcdType != null" >
+        #{lcdType,jdbcType=INTEGER},
+      </if>
+      <if test="currencySymbol != null" >
+        #{currencySymbol,jdbcType=INTEGER},
+      </if>
+      <if test="kFlag != null" >
+        #{kFlag,jdbcType=BIT},
+      </if>
+      <if test="currentDetectionFlag != null" >
+        #{currentDetectionFlag,jdbcType=BIT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.metertype.MeterTypeExample" resultType="java.lang.Integer" >
+    select count(*) from meter_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update meter_type
+    <set >
+      <if test="record.meterTypeCode != null" >
+        meter_type_code = #{record.meterTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterTypeName != null" >
+        meter_type_name = #{record.meterTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.measureMode != null" >
+        measure_mode = #{record.measureMode,jdbcType=INTEGER},
+      </if>
+      <if test="record.pulseDecimalPlaces != null" >
+        pulse_decimal_places = #{record.pulseDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceDecimalPlaces != null" >
+        price_decimal_places = #{record.priceDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="record.measureDecimalPlaces != null" >
+        measure_decimal_places = #{record.measureDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="record.q3 != null" >
+        q3 = #{record.q3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mediumType != null" >
+        medium_type = #{record.mediumType,jdbcType=INTEGER},
+      </if>
+      <if test="record.communicationType != null" >
+        communication_type = #{record.communicationType,jdbcType=INTEGER},
+      </if>
+      <if test="record.lcdType != null" >
+        lcd_type = #{record.lcdType,jdbcType=INTEGER},
+      </if>
+      <if test="record.currencySymbol != null" >
+        currency_symbol = #{record.currencySymbol,jdbcType=INTEGER},
+      </if>
+      <if test="record.kFlag != null" >
+        k_flag = #{record.kFlag,jdbcType=BIT},
+      </if>
+      <if test="record.currentDetectionFlag != null" >
+        current_detection_flag = #{record.currentDetectionFlag,jdbcType=BIT},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update meter_type
+    set meter_type_code = #{record.meterTypeCode,jdbcType=BIGINT},
+      meter_type_name = #{record.meterTypeName,jdbcType=VARCHAR},
+      measure_mode = #{record.measureMode,jdbcType=INTEGER},
+      pulse_decimal_places = #{record.pulseDecimalPlaces,jdbcType=INTEGER},
+      price_decimal_places = #{record.priceDecimalPlaces,jdbcType=INTEGER},
+      measure_decimal_places = #{record.measureDecimalPlaces,jdbcType=INTEGER},
+      q3 = #{record.q3,jdbcType=DECIMAL},
+      medium_type = #{record.mediumType,jdbcType=INTEGER},
+      communication_type = #{record.communicationType,jdbcType=INTEGER},
+      lcd_type = #{record.lcdType,jdbcType=INTEGER},
+      currency_symbol = #{record.currencySymbol,jdbcType=INTEGER},
+      k_flag = #{record.kFlag,jdbcType=BIT},
+      current_detection_flag = #{record.currentDetectionFlag,jdbcType=BIT},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.metertype.MeterType" >
+    update meter_type
+    <set >
+      <if test="meterTypeName != null" >
+        meter_type_name = #{meterTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="measureMode != null" >
+        measure_mode = #{measureMode,jdbcType=INTEGER},
+      </if>
+      <if test="pulseDecimalPlaces != null" >
+        pulse_decimal_places = #{pulseDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="priceDecimalPlaces != null" >
+        price_decimal_places = #{priceDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="measureDecimalPlaces != null" >
+        measure_decimal_places = #{measureDecimalPlaces,jdbcType=INTEGER},
+      </if>
+      <if test="q3 != null" >
+        q3 = #{q3,jdbcType=DECIMAL},
+      </if>
+      <if test="mediumType != null" >
+        medium_type = #{mediumType,jdbcType=INTEGER},
+      </if>
+      <if test="communicationType != null" >
+        communication_type = #{communicationType,jdbcType=INTEGER},
+      </if>
+      <if test="lcdType != null" >
+        lcd_type = #{lcdType,jdbcType=INTEGER},
+      </if>
+      <if test="currencySymbol != null" >
+        currency_symbol = #{currencySymbol,jdbcType=INTEGER},
+      </if>
+      <if test="kFlag != null" >
+        k_flag = #{kFlag,jdbcType=BIT},
+      </if>
+      <if test="currentDetectionFlag != null" >
+        current_detection_flag = #{currentDetectionFlag,jdbcType=BIT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where meter_type_code = #{meterTypeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.metertype.MeterType" >
+    update meter_type
+    set meter_type_name = #{meterTypeName,jdbcType=VARCHAR},
+      measure_mode = #{measureMode,jdbcType=INTEGER},
+      pulse_decimal_places = #{pulseDecimalPlaces,jdbcType=INTEGER},
+      price_decimal_places = #{priceDecimalPlaces,jdbcType=INTEGER},
+      measure_decimal_places = #{measureDecimalPlaces,jdbcType=INTEGER},
+      q3 = #{q3,jdbcType=DECIMAL},
+      medium_type = #{mediumType,jdbcType=INTEGER},
+      communication_type = #{communicationType,jdbcType=INTEGER},
+      lcd_type = #{lcdType,jdbcType=INTEGER},
+      currency_symbol = #{currencySymbol,jdbcType=INTEGER},
+      k_flag = #{kFlag,jdbcType=BIT},
+      current_detection_flag = #{currentDetectionFlag,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR}
+    where meter_type_code = #{meterTypeCode,jdbcType=BIGINT}
+  </update>
+</mapper>

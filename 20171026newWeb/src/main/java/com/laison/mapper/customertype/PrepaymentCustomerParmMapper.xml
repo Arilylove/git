@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.customertype.PrepaymentCustomerParmMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.customertype.PrepaymentCustomerParm" >
+    <id column="customer_type_code" property="customerTypeCode" jdbcType="BIGINT" />
+    <result column="month_limit_flag" property="monthLimitFlag" jdbcType="BIT" />
+    <result column="month_max_consume_limit" property="monthMaxConsumeLimit" jdbcType="INTEGER" />
+    <result column="alarm_value" property="alarmValue" jdbcType="DECIMAL" />
+    <result column="purchase_max" property="purchaseMax" jdbcType="DECIMAL" />
+    <result column="overdraft_max" property="overdraftMax" jdbcType="DECIMAL" />
+    <result column="buzzer_alarm_flag" property="buzzerAlarmFlag" jdbcType="BIT" />
+    <result column="alarm_close_valve_flag" property="alarmCloseValveFlag" jdbcType="BIT" />
+    <result column="friendly_period_scheme_code" property="friendlyPeriodSchemeCode" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_type_code, month_limit_flag, month_max_consume_limit, alarm_value, purchase_max, 
+    overdraft_max, buzzer_alarm_flag, alarm_close_valve_flag, friendly_period_scheme_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.customertype.PrepaymentCustomerParmExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prepayment_customer_parm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from prepayment_customer_parm
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from prepayment_customer_parm
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.customertype.PrepaymentCustomerParmExample" >
+    delete from prepayment_customer_parm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.customertype.PrepaymentCustomerParm" >
+    insert into prepayment_customer_parm (customer_type_code, month_limit_flag, month_max_consume_limit, 
+      alarm_value, purchase_max, overdraft_max, 
+      buzzer_alarm_flag, alarm_close_valve_flag, friendly_period_scheme_code
+      )
+    values (#{customerTypeCode,jdbcType=BIGINT}, #{monthLimitFlag,jdbcType=BIT}, #{monthMaxConsumeLimit,jdbcType=INTEGER}, 
+      #{alarmValue,jdbcType=DECIMAL}, #{purchaseMax,jdbcType=DECIMAL}, #{overdraftMax,jdbcType=DECIMAL}, 
+      #{buzzerAlarmFlag,jdbcType=BIT}, #{alarmCloseValveFlag,jdbcType=BIT}, #{friendlyPeriodSchemeCode,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.customertype.PrepaymentCustomerParm" >
+    insert into prepayment_customer_parm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerTypeCode != null" >
+        customer_type_code,
+      </if>
+      <if test="monthLimitFlag != null" >
+        month_limit_flag,
+      </if>
+      <if test="monthMaxConsumeLimit != null" >
+        month_max_consume_limit,
+      </if>
+      <if test="alarmValue != null" >
+        alarm_value,
+      </if>
+      <if test="purchaseMax != null" >
+        purchase_max,
+      </if>
+      <if test="overdraftMax != null" >
+        overdraft_max,
+      </if>
+      <if test="buzzerAlarmFlag != null" >
+        buzzer_alarm_flag,
+      </if>
+      <if test="alarmCloseValveFlag != null" >
+        alarm_close_valve_flag,
+      </if>
+      <if test="friendlyPeriodSchemeCode != null" >
+        friendly_period_scheme_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerTypeCode != null" >
+        #{customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="monthLimitFlag != null" >
+        #{monthLimitFlag,jdbcType=BIT},
+      </if>
+      <if test="monthMaxConsumeLimit != null" >
+        #{monthMaxConsumeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="alarmValue != null" >
+        #{alarmValue,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseMax != null" >
+        #{purchaseMax,jdbcType=DECIMAL},
+      </if>
+      <if test="overdraftMax != null" >
+        #{overdraftMax,jdbcType=DECIMAL},
+      </if>
+      <if test="buzzerAlarmFlag != null" >
+        #{buzzerAlarmFlag,jdbcType=BIT},
+      </if>
+      <if test="alarmCloseValveFlag != null" >
+        #{alarmCloseValveFlag,jdbcType=BIT},
+      </if>
+      <if test="friendlyPeriodSchemeCode != null" >
+        #{friendlyPeriodSchemeCode,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.customertype.PrepaymentCustomerParmExample" resultType="java.lang.Integer" >
+    select count(*) from prepayment_customer_parm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update prepayment_customer_parm
+    <set >
+      <if test="record.customerTypeCode != null" >
+        customer_type_code = #{record.customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.monthLimitFlag != null" >
+        month_limit_flag = #{record.monthLimitFlag,jdbcType=BIT},
+      </if>
+      <if test="record.monthMaxConsumeLimit != null" >
+        month_max_consume_limit = #{record.monthMaxConsumeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.alarmValue != null" >
+        alarm_value = #{record.alarmValue,jdbcType=DECIMAL},
+      </if>
+      <if test="record.purchaseMax != null" >
+        purchase_max = #{record.purchaseMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.overdraftMax != null" >
+        overdraft_max = #{record.overdraftMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.buzzerAlarmFlag != null" >
+        buzzer_alarm_flag = #{record.buzzerAlarmFlag,jdbcType=BIT},
+      </if>
+      <if test="record.alarmCloseValveFlag != null" >
+        alarm_close_valve_flag = #{record.alarmCloseValveFlag,jdbcType=BIT},
+      </if>
+      <if test="record.friendlyPeriodSchemeCode != null" >
+        friendly_period_scheme_code = #{record.friendlyPeriodSchemeCode,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update prepayment_customer_parm
+    set customer_type_code = #{record.customerTypeCode,jdbcType=BIGINT},
+      month_limit_flag = #{record.monthLimitFlag,jdbcType=BIT},
+      month_max_consume_limit = #{record.monthMaxConsumeLimit,jdbcType=INTEGER},
+      alarm_value = #{record.alarmValue,jdbcType=DECIMAL},
+      purchase_max = #{record.purchaseMax,jdbcType=DECIMAL},
+      overdraft_max = #{record.overdraftMax,jdbcType=DECIMAL},
+      buzzer_alarm_flag = #{record.buzzerAlarmFlag,jdbcType=BIT},
+      alarm_close_valve_flag = #{record.alarmCloseValveFlag,jdbcType=BIT},
+      friendly_period_scheme_code = #{record.friendlyPeriodSchemeCode,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.customertype.PrepaymentCustomerParm" >
+    update prepayment_customer_parm
+    <set >
+      <if test="monthLimitFlag != null" >
+        month_limit_flag = #{monthLimitFlag,jdbcType=BIT},
+      </if>
+      <if test="monthMaxConsumeLimit != null" >
+        month_max_consume_limit = #{monthMaxConsumeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="alarmValue != null" >
+        alarm_value = #{alarmValue,jdbcType=DECIMAL},
+      </if>
+      <if test="purchaseMax != null" >
+        purchase_max = #{purchaseMax,jdbcType=DECIMAL},
+      </if>
+      <if test="overdraftMax != null" >
+        overdraft_max = #{overdraftMax,jdbcType=DECIMAL},
+      </if>
+      <if test="buzzerAlarmFlag != null" >
+        buzzer_alarm_flag = #{buzzerAlarmFlag,jdbcType=BIT},
+      </if>
+      <if test="alarmCloseValveFlag != null" >
+        alarm_close_valve_flag = #{alarmCloseValveFlag,jdbcType=BIT},
+      </if>
+      <if test="friendlyPeriodSchemeCode != null" >
+        friendly_period_scheme_code = #{friendlyPeriodSchemeCode,jdbcType=BIGINT},
+      </if>
+    </set>
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.customertype.PrepaymentCustomerParm" >
+    update prepayment_customer_parm
+    set month_limit_flag = #{monthLimitFlag,jdbcType=BIT},
+      month_max_consume_limit = #{monthMaxConsumeLimit,jdbcType=INTEGER},
+      alarm_value = #{alarmValue,jdbcType=DECIMAL},
+      purchase_max = #{purchaseMax,jdbcType=DECIMAL},
+      overdraft_max = #{overdraftMax,jdbcType=DECIMAL},
+      buzzer_alarm_flag = #{buzzerAlarmFlag,jdbcType=BIT},
+      alarm_close_valve_flag = #{alarmCloseValveFlag,jdbcType=BIT},
+      friendly_period_scheme_code = #{friendlyPeriodSchemeCode,jdbcType=BIGINT}
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </update>
+</mapper>

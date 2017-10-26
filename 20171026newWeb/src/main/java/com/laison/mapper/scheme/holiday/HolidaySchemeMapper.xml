@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.scheme.holiday.HolidaySchemeMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.scheme.holiday.HolidayScheme" >
+    <id column="holiday_scheme_code" property="holidaySchemeCode" jdbcType="BIGINT" />
+    <result column="holiday_scheme_name" property="holidaySchemeName" jdbcType="VARCHAR" />
+    <result column="enable_holiday_scheme_flag" property="enableHolidaySchemeFlag" jdbcType="BIT" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <collection column="holiday_scheme_code" property="holidayDetails" ofType="com.laison.entity.scheme.holiday.detail.HolidayDetail" javaType="java.util.ArrayList" select="selectHolidayDetails"/>
+  </resultMap>
+  <select id="selectHolidayDetails" resultMap="com.laison.mapper.scheme.holiday.detail.HolidayDetailMapper.BaseResultMap" parameterType="long">
+        SELECT * from holiday_detail where holiday_scheme_code= ${_parameter} and (year_of_date = YEAR( NOW( ) ) or  year_of_date = YEAR( ADDDATE(NOW( ),INTERVAL 1 YEAR) )) ORDER BY year_of_date asc LIMIT 0,2
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    holiday_scheme_code, holiday_scheme_name, enable_holiday_scheme_flag, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.holiday.HolidaySchemeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from holiday_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from holiday_scheme
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from holiday_scheme
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.scheme.holiday.HolidaySchemeExample" >
+    delete from holiday_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.scheme.holiday.HolidayScheme" >
+    insert into holiday_scheme (holiday_scheme_code, holiday_scheme_name, 
+      enable_holiday_scheme_flag, state)
+    values (#{holidaySchemeCode,jdbcType=BIGINT}, #{holidaySchemeName,jdbcType=VARCHAR}, 
+      #{enableHolidaySchemeFlag,jdbcType=BIT}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.scheme.holiday.HolidayScheme" >
+    insert into holiday_scheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="holidaySchemeCode != null" >
+        holiday_scheme_code,
+      </if>
+      <if test="holidaySchemeName != null" >
+        holiday_scheme_name,
+      </if>
+      <if test="enableHolidaySchemeFlag != null" >
+        enable_holiday_scheme_flag,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="holidaySchemeCode != null" >
+        #{holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="holidaySchemeName != null" >
+        #{holidaySchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="enableHolidaySchemeFlag != null" >
+        #{enableHolidaySchemeFlag,jdbcType=BIT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.scheme.holiday.HolidaySchemeExample" resultType="java.lang.Integer" >
+    select count(*) from holiday_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update holiday_scheme
+    <set >
+      <if test="record.holidaySchemeCode != null" >
+        holiday_scheme_code = #{record.holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.holidaySchemeName != null" >
+        holiday_scheme_name = #{record.holidaySchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enableHolidaySchemeFlag != null" >
+        enable_holiday_scheme_flag = #{record.enableHolidaySchemeFlag,jdbcType=BIT},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update holiday_scheme
+    set holiday_scheme_code = #{record.holidaySchemeCode,jdbcType=BIGINT},
+      holiday_scheme_name = #{record.holidaySchemeName,jdbcType=VARCHAR},
+      enable_holiday_scheme_flag = #{record.enableHolidaySchemeFlag,jdbcType=BIT},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.scheme.holiday.HolidayScheme" >
+    update holiday_scheme
+    <set >
+      <if test="holidaySchemeName != null" >
+        holiday_scheme_name = #{holidaySchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="enableHolidaySchemeFlag != null" >
+        enable_holiday_scheme_flag = #{enableHolidaySchemeFlag,jdbcType=BIT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.scheme.holiday.HolidayScheme" >
+    update holiday_scheme
+    set holiday_scheme_name = #{holidaySchemeName,jdbcType=VARCHAR},
+      enable_holiday_scheme_flag = #{enableHolidaySchemeFlag,jdbcType=BIT},
+      state = #{state,jdbcType=VARCHAR}
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+  </update>
+</mapper>

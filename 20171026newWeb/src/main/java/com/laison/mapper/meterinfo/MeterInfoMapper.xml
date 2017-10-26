@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.meterinfo.MeterInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.meterinfo.MeterInfo" >
+    <id column="meter_code" property="meterCode" jdbcType="BIGINT" />
+    <id column="meter_num_code" property="meterNumCode" jdbcType="BIGINT" />
+    <result column="customer_type_code" property="customerTypeCode" jdbcType="BIGINT" />
+    <result column="tid_base_year" property="tidBaseYear" jdbcType="INTEGER" />
+    <result column="encrypt_key" property="encryptKey" jdbcType="INTEGER" />
+    <result column="encrypt_way" property="encryptWay" jdbcType="INTEGER" />
+    <result column="soft_encrypt_states" property="softEncryptStates" jdbcType="VARCHAR" />
+    <result column="lora_report_frequency" property="loraReportFrequency" jdbcType="VARCHAR" />
+    <result column="lora_work_frequency" property="loraWorkFrequency" jdbcType="VARCHAR" />
+    <collection column="meter_code" property="meterInfoDetail" 
+    ofType="com.laison.entity.meterinfo.detail.MeterInfoDetail" 
+    javaType="java.util.ArrayList" select="selectMeterInfoDetails"/>
+  </resultMap>
+  <select id="selectMeterInfoDetails" resultMap="com.laison.mapper.meterinfo.detail.MeterInfoDetailMapper.BaseResultMap" parameterType="long">
+        SELECT * from meter_info_detail where meter_code= ${_parameter}
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    meter_code, meter_num_code, customer_type_code, tid_base_year, encrypt_key, encrypt_way, 
+    soft_encrypt_states, lora_report_frequency, lora_work_frequency
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.meterinfo.MeterInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from meter_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.laison.entity.meterinfo.MeterInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from meter_info
+    where meter_code = #{meterCode,jdbcType=BIGINT}
+      and meter_num_code = #{meterNumCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.laison.entity.meterinfo.MeterInfoKey" >
+    delete from meter_info
+    where meter_code = #{meterCode,jdbcType=BIGINT}
+      and meter_num_code = #{meterNumCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.meterinfo.MeterInfoExample" >
+    delete from meter_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.meterinfo.MeterInfo" >
+    insert into meter_info (meter_code, meter_num_code, customer_type_code, 
+      tid_base_year, encrypt_key, encrypt_way, 
+      soft_encrypt_states, lora_report_frequency, 
+      lora_work_frequency)
+    values (#{meterCode,jdbcType=BIGINT}, #{meterNumCode,jdbcType=BIGINT}, #{customerTypeCode,jdbcType=BIGINT}, 
+      #{tidBaseYear,jdbcType=INTEGER}, #{encryptKey,jdbcType=INTEGER}, #{encryptWay,jdbcType=INTEGER}, 
+      #{softEncryptStates,jdbcType=VARCHAR}, #{loraReportFrequency,jdbcType=VARCHAR}, 
+      #{loraWorkFrequency,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.meterinfo.MeterInfo" >
+    insert into meter_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meterCode != null" >
+        meter_code,
+      </if>
+      <if test="meterNumCode != null" >
+        meter_num_code,
+      </if>
+      <if test="customerTypeCode != null" >
+        customer_type_code,
+      </if>
+      <if test="tidBaseYear != null" >
+        tid_base_year,
+      </if>
+      <if test="encryptKey != null" >
+        encrypt_key,
+      </if>
+      <if test="encryptWay != null" >
+        encrypt_way,
+      </if>
+      <if test="softEncryptStates != null" >
+        soft_encrypt_states,
+      </if>
+      <if test="loraReportFrequency != null" >
+        lora_report_frequency,
+      </if>
+      <if test="loraWorkFrequency != null" >
+        lora_work_frequency,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meterCode != null" >
+        #{meterCode,jdbcType=BIGINT},
+      </if>
+      <if test="meterNumCode != null" >
+        #{meterNumCode,jdbcType=BIGINT},
+      </if>
+      <if test="customerTypeCode != null" >
+        #{customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="tidBaseYear != null" >
+        #{tidBaseYear,jdbcType=INTEGER},
+      </if>
+      <if test="encryptKey != null" >
+        #{encryptKey,jdbcType=INTEGER},
+      </if>
+      <if test="encryptWay != null" >
+        #{encryptWay,jdbcType=INTEGER},
+      </if>
+      <if test="softEncryptStates != null" >
+        #{softEncryptStates,jdbcType=VARCHAR},
+      </if>
+      <if test="loraReportFrequency != null" >
+        #{loraReportFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="loraWorkFrequency != null" >
+        #{loraWorkFrequency,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.meterinfo.MeterInfoExample" resultType="java.lang.Integer" >
+    select count(*) from meter_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update meter_info
+    <set >
+      <if test="record.meterCode != null" >
+        meter_code = #{record.meterCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.meterNumCode != null" >
+        meter_num_code = #{record.meterNumCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerTypeCode != null" >
+        customer_type_code = #{record.customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.tidBaseYear != null" >
+        tid_base_year = #{record.tidBaseYear,jdbcType=INTEGER},
+      </if>
+      <if test="record.encryptKey != null" >
+        encrypt_key = #{record.encryptKey,jdbcType=INTEGER},
+      </if>
+      <if test="record.encryptWay != null" >
+        encrypt_way = #{record.encryptWay,jdbcType=INTEGER},
+      </if>
+      <if test="record.softEncryptStates != null" >
+        soft_encrypt_states = #{record.softEncryptStates,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loraReportFrequency != null" >
+        lora_report_frequency = #{record.loraReportFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loraWorkFrequency != null" >
+        lora_work_frequency = #{record.loraWorkFrequency,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update meter_info
+    set meter_code = #{record.meterCode,jdbcType=BIGINT},
+      meter_num_code = #{record.meterNumCode,jdbcType=BIGINT},
+      customer_type_code = #{record.customerTypeCode,jdbcType=BIGINT},
+      tid_base_year = #{record.tidBaseYear,jdbcType=INTEGER},
+      encrypt_key = #{record.encryptKey,jdbcType=INTEGER},
+      encrypt_way = #{record.encryptWay,jdbcType=INTEGER},
+      soft_encrypt_states = #{record.softEncryptStates,jdbcType=VARCHAR},
+      lora_report_frequency = #{record.loraReportFrequency,jdbcType=VARCHAR},
+      lora_work_frequency = #{record.loraWorkFrequency,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.meterinfo.MeterInfo" >
+    update meter_info
+    <set >
+      <if test="customerTypeCode != null" >
+        customer_type_code = #{customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="tidBaseYear != null" >
+        tid_base_year = #{tidBaseYear,jdbcType=INTEGER},
+      </if>
+      <if test="encryptKey != null" >
+        encrypt_key = #{encryptKey,jdbcType=INTEGER},
+      </if>
+      <if test="encryptWay != null" >
+        encrypt_way = #{encryptWay,jdbcType=INTEGER},
+      </if>
+      <if test="softEncryptStates != null" >
+        soft_encrypt_states = #{softEncryptStates,jdbcType=VARCHAR},
+      </if>
+      <if test="loraReportFrequency != null" >
+        lora_report_frequency = #{loraReportFrequency,jdbcType=VARCHAR},
+      </if>
+      <if test="loraWorkFrequency != null" >
+        lora_work_frequency = #{loraWorkFrequency,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where meter_code = #{meterCode,jdbcType=BIGINT}
+      and meter_num_code = #{meterNumCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.meterinfo.MeterInfo" >
+    update meter_info
+    set customer_type_code = #{customerTypeCode,jdbcType=BIGINT},
+      tid_base_year = #{tidBaseYear,jdbcType=INTEGER},
+      encrypt_key = #{encryptKey,jdbcType=INTEGER},
+      encrypt_way = #{encryptWay,jdbcType=INTEGER},
+      soft_encrypt_states = #{softEncryptStates,jdbcType=VARCHAR},
+      lora_report_frequency = #{loraReportFrequency,jdbcType=VARCHAR},
+      lora_work_frequency = #{loraWorkFrequency,jdbcType=VARCHAR}
+    where meter_code = #{meterCode,jdbcType=BIGINT}
+      and meter_num_code = #{meterNumCode,jdbcType=BIGINT}
+  </update>
+</mapper>

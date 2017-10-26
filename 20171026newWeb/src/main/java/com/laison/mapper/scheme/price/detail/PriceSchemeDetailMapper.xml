@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.scheme.price.detail.PriceSchemeDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.scheme.price.detail.PriceSchemeDetail" >
+    <id column="step_index" property="stepIndex" jdbcType="INTEGER" />
+    <id column="price_scheme_code" property="priceSchemeCode" jdbcType="BIGINT" />
+    <result column="end_value" property="endValue" jdbcType="INTEGER" />
+    <result column="start_value" property="startValue" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    step_index, price_scheme_code, end_value, start_value, price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from price_scheme_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetailKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from price_scheme_detail
+    where step_index = #{stepIndex,jdbcType=INTEGER}
+      and price_scheme_code = #{priceSchemeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetailKey" >
+    delete from price_scheme_detail
+    where step_index = #{stepIndex,jdbcType=INTEGER}
+      and price_scheme_code = #{priceSchemeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetailExample" >
+    delete from price_scheme_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetail" >
+    insert into price_scheme_detail (step_index, price_scheme_code, end_value, 
+      start_value, price)
+    values (#{stepIndex,jdbcType=INTEGER}, #{priceSchemeCode,jdbcType=BIGINT}, #{endValue,jdbcType=INTEGER}, 
+      #{startValue,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetail" >
+    insert into price_scheme_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stepIndex != null" >
+        step_index,
+      </if>
+      <if test="priceSchemeCode != null" >
+        price_scheme_code,
+      </if>
+      <if test="endValue != null" >
+        end_value,
+      </if>
+      <if test="startValue != null" >
+        start_value,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stepIndex != null" >
+        #{stepIndex,jdbcType=INTEGER},
+      </if>
+      <if test="priceSchemeCode != null" >
+        #{priceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="endValue != null" >
+        #{endValue,jdbcType=INTEGER},
+      </if>
+      <if test="startValue != null" >
+        #{startValue,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetailExample" resultType="java.lang.Integer" >
+    select count(*) from price_scheme_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update price_scheme_detail
+    <set >
+      <if test="record.stepIndex != null" >
+        step_index = #{record.stepIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceSchemeCode != null" >
+        price_scheme_code = #{record.priceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.endValue != null" >
+        end_value = #{record.endValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.startValue != null" >
+        start_value = #{record.startValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update price_scheme_detail
+    set step_index = #{record.stepIndex,jdbcType=INTEGER},
+      price_scheme_code = #{record.priceSchemeCode,jdbcType=BIGINT},
+      end_value = #{record.endValue,jdbcType=INTEGER},
+      start_value = #{record.startValue,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetail" >
+    update price_scheme_detail
+    <set >
+      <if test="endValue != null" >
+        end_value = #{endValue,jdbcType=INTEGER},
+      </if>
+      <if test="startValue != null" >
+        start_value = #{startValue,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where step_index = #{stepIndex,jdbcType=INTEGER}
+      and price_scheme_code = #{priceSchemeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.scheme.price.detail.PriceSchemeDetail" >
+    update price_scheme_detail
+    set end_value = #{endValue,jdbcType=INTEGER},
+      start_value = #{startValue,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL}
+    where step_index = #{stepIndex,jdbcType=INTEGER}
+      and price_scheme_code = #{priceSchemeCode,jdbcType=BIGINT}
+  </update>
+</mapper>

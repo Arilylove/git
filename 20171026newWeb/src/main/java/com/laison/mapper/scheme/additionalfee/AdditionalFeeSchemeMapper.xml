@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.scheme.additionalfee.AdditionalFeeSchemeMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.scheme.additionalfee.AdditionalFeeScheme" >
+    <id column="additional_fee_scheme_code" property="additionalFeeSchemeCode" jdbcType="BIGINT" />
+    <result column="additional_fee_scheme_name" property="additionalFeeSchemeName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <collection column="additional_fee_scheme_code" property="additionalFeeDetails" 
+    ofType="com.laison.entity.scheme.additionalfee.detail.AdditionalFeeDetail" 
+    javaType="java.util.ArrayList" select="selectAdditionalFeeDetails"/>
+  </resultMap>
+  <select id="selectAdditionalFeeDetails" resultMap="com.laison.mapper.scheme.additionalfee.detail.AdditionalFeeDetailMapper.BaseResultMap" parameterType="long">
+        SELECT * from additional_fee_detail where additional_fee_scheme_code= ${_parameter}
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    additional_fee_scheme_code, additional_fee_scheme_name, create_date, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeSchemeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from additional_fee_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from additional_fee_scheme
+    where additional_fee_scheme_code = #{additionalFeeSchemeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from additional_fee_scheme
+    where additional_fee_scheme_code = #{additionalFeeSchemeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeSchemeExample" >
+    delete from additional_fee_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeScheme" >
+    insert into additional_fee_scheme (additional_fee_scheme_code, additional_fee_scheme_name, 
+      create_date, state)
+    values (#{additionalFeeSchemeCode,jdbcType=BIGINT}, #{additionalFeeSchemeName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeScheme" >
+    insert into additional_fee_scheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="additionalFeeSchemeCode != null" >
+        additional_fee_scheme_code,
+      </if>
+      <if test="additionalFeeSchemeName != null" >
+        additional_fee_scheme_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="additionalFeeSchemeCode != null" >
+        #{additionalFeeSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="additionalFeeSchemeName != null" >
+        #{additionalFeeSchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeSchemeExample" resultType="java.lang.Integer" >
+    select count(*) from additional_fee_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update additional_fee_scheme
+    <set >
+      <if test="record.additionalFeeSchemeCode != null" >
+        additional_fee_scheme_code = #{record.additionalFeeSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.additionalFeeSchemeName != null" >
+        additional_fee_scheme_name = #{record.additionalFeeSchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update additional_fee_scheme
+    set additional_fee_scheme_code = #{record.additionalFeeSchemeCode,jdbcType=BIGINT},
+      additional_fee_scheme_name = #{record.additionalFeeSchemeName,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeScheme" >
+    update additional_fee_scheme
+    <set >
+      <if test="additionalFeeSchemeName != null" >
+        additional_fee_scheme_name = #{additionalFeeSchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where additional_fee_scheme_code = #{additionalFeeSchemeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.scheme.additionalfee.AdditionalFeeScheme" >
+    update additional_fee_scheme
+    set additional_fee_scheme_name = #{additionalFeeSchemeName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR}
+    where additional_fee_scheme_code = #{additionalFeeSchemeCode,jdbcType=BIGINT}
+  </update>
+</mapper>

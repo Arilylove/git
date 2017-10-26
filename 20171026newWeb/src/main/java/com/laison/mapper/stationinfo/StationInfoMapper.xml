@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.stationinfo.StationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.stationinfo.StationInfo" >
+    <id column="company_code" property="companyCode" jdbcType="BIGINT" />
+    <id column="station_code" property="stationCode" jdbcType="BIGINT" />
+    <result column="station_name" property="stationName" jdbcType="VARCHAR" />
+    <result column="station_address" property="stationAddress" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    company_code, station_code, station_name, station_address, create_date, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.stationinfo.StationInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from station_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.laison.entity.stationinfo.StationInfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from station_info
+    where company_code = #{companyCode,jdbcType=BIGINT}
+      and station_code = #{stationCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.laison.entity.stationinfo.StationInfoKey" >
+    delete from station_info
+    where company_code = #{companyCode,jdbcType=BIGINT}
+      and station_code = #{stationCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.stationinfo.StationInfoExample" >
+    delete from station_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.stationinfo.StationInfo" >
+    insert into station_info (company_code, station_code, station_name, 
+      station_address, create_date, state
+      )
+    values (#{companyCode,jdbcType=BIGINT}, #{stationCode,jdbcType=BIGINT}, #{stationName,jdbcType=VARCHAR}, 
+      #{stationAddress,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.stationinfo.StationInfo" >
+    insert into station_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyCode != null" >
+        company_code,
+      </if>
+      <if test="stationCode != null" >
+        station_code,
+      </if>
+      <if test="stationName != null" >
+        station_name,
+      </if>
+      <if test="stationAddress != null" >
+        station_address,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyCode != null" >
+        #{companyCode,jdbcType=BIGINT},
+      </if>
+      <if test="stationCode != null" >
+        #{stationCode,jdbcType=BIGINT},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationAddress != null" >
+        #{stationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.stationinfo.StationInfoExample" resultType="java.lang.Integer" >
+    select count(*) from station_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update station_info
+    <set >
+      <if test="record.companyCode != null" >
+        company_code = #{record.companyCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.stationCode != null" >
+        station_code = #{record.stationCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.stationName != null" >
+        station_name = #{record.stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationAddress != null" >
+        station_address = #{record.stationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update station_info
+    set company_code = #{record.companyCode,jdbcType=BIGINT},
+      station_code = #{record.stationCode,jdbcType=BIGINT},
+      station_name = #{record.stationName,jdbcType=VARCHAR},
+      station_address = #{record.stationAddress,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.stationinfo.StationInfo" >
+    update station_info
+    <set >
+      <if test="stationName != null" >
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationAddress != null" >
+        station_address = #{stationAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where company_code = #{companyCode,jdbcType=BIGINT}
+      and station_code = #{stationCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.stationinfo.StationInfo" >
+    update station_info
+    set station_name = #{stationName,jdbcType=VARCHAR},
+      station_address = #{stationAddress,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR}
+    where company_code = #{companyCode,jdbcType=BIGINT}
+      and station_code = #{stationCode,jdbcType=BIGINT}
+  </update>
+</mapper>

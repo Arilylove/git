@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.customertype.CustomerTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.customertype.CustomerType" >
+    <id column="customer_type_code" property="customerTypeCode" jdbcType="BIGINT" />
+    <result column="customer_type_name" property="customerTypeName" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="meter_type_code" property="meterTypeCode" jdbcType="BIGINT" />
+    <result column="price_scheme_code" property="priceSchemeCode" jdbcType="BIGINT" />
+    <result column="reserve_price_scheme_code" property="reservePriceSchemeCode" jdbcType="BIGINT" />
+    <result column="reserve_price_scheme_start_time" property="reservePriceSchemeStartTime" jdbcType="TIMESTAMP" />
+    <result column="open_account_fee" property="openAccountFee" jdbcType="DECIMAL" />
+    <result column="replace_meter_fee" property="replaceMeterFee" jdbcType="DECIMAL" />
+    <result column="cancel_purchase_fee" property="cancelPurchaseFee" jdbcType="DECIMAL" />
+    <result column="max_normal_water_usage" property="maxNormalWaterUsage" jdbcType="INTEGER" />
+    <result column="min_normal_water_usage" property="minNormalWaterUsage" jdbcType="INTEGER" />
+    <result column="reeze_day" property="reezeDay" jdbcType="INTEGER" />
+    <result column="event_func_flag" property="eventFuncFlag" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    customer_type_code, customer_type_name, pay_type, meter_type_code, price_scheme_code, 
+    reserve_price_scheme_code, reserve_price_scheme_start_time, open_account_fee, replace_meter_fee, 
+    cancel_purchase_fee, max_normal_water_usage, min_normal_water_usage, reeze_day, event_func_flag, 
+    create_date, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.customertype.CustomerTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer_type
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from customer_type
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.customertype.CustomerTypeExample" >
+    delete from customer_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.customertype.CustomerType" >
+    insert into customer_type (customer_type_code, customer_type_name, 
+      pay_type, meter_type_code, price_scheme_code, 
+      reserve_price_scheme_code, reserve_price_scheme_start_time, 
+      open_account_fee, replace_meter_fee, cancel_purchase_fee, 
+      max_normal_water_usage, min_normal_water_usage, 
+      reeze_day, event_func_flag, create_date, 
+      state)
+    values (#{customerTypeCode,jdbcType=BIGINT}, #{customerTypeName,jdbcType=VARCHAR}, 
+      #{payType,jdbcType=INTEGER}, #{meterTypeCode,jdbcType=BIGINT}, #{priceSchemeCode,jdbcType=BIGINT}, 
+      #{reservePriceSchemeCode,jdbcType=BIGINT}, #{reservePriceSchemeStartTime,jdbcType=TIMESTAMP}, 
+      #{openAccountFee,jdbcType=DECIMAL}, #{replaceMeterFee,jdbcType=DECIMAL}, #{cancelPurchaseFee,jdbcType=DECIMAL}, 
+      #{maxNormalWaterUsage,jdbcType=INTEGER}, #{minNormalWaterUsage,jdbcType=INTEGER}, 
+      #{reezeDay,jdbcType=INTEGER}, #{eventFuncFlag,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.customertype.CustomerType" >
+    insert into customer_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerTypeCode != null" >
+        customer_type_code,
+      </if>
+      <if test="customerTypeName != null" >
+        customer_type_name,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="meterTypeCode != null" >
+        meter_type_code,
+      </if>
+      <if test="priceSchemeCode != null" >
+        price_scheme_code,
+      </if>
+      <if test="reservePriceSchemeCode != null" >
+        reserve_price_scheme_code,
+      </if>
+      <if test="reservePriceSchemeStartTime != null" >
+        reserve_price_scheme_start_time,
+      </if>
+      <if test="openAccountFee != null" >
+        open_account_fee,
+      </if>
+      <if test="replaceMeterFee != null" >
+        replace_meter_fee,
+      </if>
+      <if test="cancelPurchaseFee != null" >
+        cancel_purchase_fee,
+      </if>
+      <if test="maxNormalWaterUsage != null" >
+        max_normal_water_usage,
+      </if>
+      <if test="minNormalWaterUsage != null" >
+        min_normal_water_usage,
+      </if>
+      <if test="reezeDay != null" >
+        reeze_day,
+      </if>
+      <if test="eventFuncFlag != null" >
+        event_func_flag,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerTypeCode != null" >
+        #{customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="customerTypeName != null" >
+        #{customerTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="meterTypeCode != null" >
+        #{meterTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="priceSchemeCode != null" >
+        #{priceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="reservePriceSchemeCode != null" >
+        #{reservePriceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="reservePriceSchemeStartTime != null" >
+        #{reservePriceSchemeStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openAccountFee != null" >
+        #{openAccountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="replaceMeterFee != null" >
+        #{replaceMeterFee,jdbcType=DECIMAL},
+      </if>
+      <if test="cancelPurchaseFee != null" >
+        #{cancelPurchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="maxNormalWaterUsage != null" >
+        #{maxNormalWaterUsage,jdbcType=INTEGER},
+      </if>
+      <if test="minNormalWaterUsage != null" >
+        #{minNormalWaterUsage,jdbcType=INTEGER},
+      </if>
+      <if test="reezeDay != null" >
+        #{reezeDay,jdbcType=INTEGER},
+      </if>
+      <if test="eventFuncFlag != null" >
+        #{eventFuncFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.customertype.CustomerTypeExample" resultType="java.lang.Integer" >
+    select count(*) from customer_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer_type
+    <set >
+      <if test="record.customerTypeCode != null" >
+        customer_type_code = #{record.customerTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerTypeName != null" >
+        customer_type_name = #{record.customerTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.meterTypeCode != null" >
+        meter_type_code = #{record.meterTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.priceSchemeCode != null" >
+        price_scheme_code = #{record.priceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.reservePriceSchemeCode != null" >
+        reserve_price_scheme_code = #{record.reservePriceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.reservePriceSchemeStartTime != null" >
+        reserve_price_scheme_start_time = #{record.reservePriceSchemeStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.openAccountFee != null" >
+        open_account_fee = #{record.openAccountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.replaceMeterFee != null" >
+        replace_meter_fee = #{record.replaceMeterFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cancelPurchaseFee != null" >
+        cancel_purchase_fee = #{record.cancelPurchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.maxNormalWaterUsage != null" >
+        max_normal_water_usage = #{record.maxNormalWaterUsage,jdbcType=INTEGER},
+      </if>
+      <if test="record.minNormalWaterUsage != null" >
+        min_normal_water_usage = #{record.minNormalWaterUsage,jdbcType=INTEGER},
+      </if>
+      <if test="record.reezeDay != null" >
+        reeze_day = #{record.reezeDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventFuncFlag != null" >
+        event_func_flag = #{record.eventFuncFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer_type
+    set customer_type_code = #{record.customerTypeCode,jdbcType=BIGINT},
+      customer_type_name = #{record.customerTypeName,jdbcType=VARCHAR},
+      pay_type = #{record.payType,jdbcType=INTEGER},
+      meter_type_code = #{record.meterTypeCode,jdbcType=BIGINT},
+      price_scheme_code = #{record.priceSchemeCode,jdbcType=BIGINT},
+      reserve_price_scheme_code = #{record.reservePriceSchemeCode,jdbcType=BIGINT},
+      reserve_price_scheme_start_time = #{record.reservePriceSchemeStartTime,jdbcType=TIMESTAMP},
+      open_account_fee = #{record.openAccountFee,jdbcType=DECIMAL},
+      replace_meter_fee = #{record.replaceMeterFee,jdbcType=DECIMAL},
+      cancel_purchase_fee = #{record.cancelPurchaseFee,jdbcType=DECIMAL},
+      max_normal_water_usage = #{record.maxNormalWaterUsage,jdbcType=INTEGER},
+      min_normal_water_usage = #{record.minNormalWaterUsage,jdbcType=INTEGER},
+      reeze_day = #{record.reezeDay,jdbcType=INTEGER},
+      event_func_flag = #{record.eventFuncFlag,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.customertype.CustomerType" >
+    update customer_type
+    <set >
+      <if test="customerTypeName != null" >
+        customer_type_name = #{customerTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="meterTypeCode != null" >
+        meter_type_code = #{meterTypeCode,jdbcType=BIGINT},
+      </if>
+      <if test="priceSchemeCode != null" >
+        price_scheme_code = #{priceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="reservePriceSchemeCode != null" >
+        reserve_price_scheme_code = #{reservePriceSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="reservePriceSchemeStartTime != null" >
+        reserve_price_scheme_start_time = #{reservePriceSchemeStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openAccountFee != null" >
+        open_account_fee = #{openAccountFee,jdbcType=DECIMAL},
+      </if>
+      <if test="replaceMeterFee != null" >
+        replace_meter_fee = #{replaceMeterFee,jdbcType=DECIMAL},
+      </if>
+      <if test="cancelPurchaseFee != null" >
+        cancel_purchase_fee = #{cancelPurchaseFee,jdbcType=DECIMAL},
+      </if>
+      <if test="maxNormalWaterUsage != null" >
+        max_normal_water_usage = #{maxNormalWaterUsage,jdbcType=INTEGER},
+      </if>
+      <if test="minNormalWaterUsage != null" >
+        min_normal_water_usage = #{minNormalWaterUsage,jdbcType=INTEGER},
+      </if>
+      <if test="reezeDay != null" >
+        reeze_day = #{reezeDay,jdbcType=INTEGER},
+      </if>
+      <if test="eventFuncFlag != null" >
+        event_func_flag = #{eventFuncFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.customertype.CustomerType" >
+    update customer_type
+    set customer_type_name = #{customerTypeName,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=INTEGER},
+      meter_type_code = #{meterTypeCode,jdbcType=BIGINT},
+      price_scheme_code = #{priceSchemeCode,jdbcType=BIGINT},
+      reserve_price_scheme_code = #{reservePriceSchemeCode,jdbcType=BIGINT},
+      reserve_price_scheme_start_time = #{reservePriceSchemeStartTime,jdbcType=TIMESTAMP},
+      open_account_fee = #{openAccountFee,jdbcType=DECIMAL},
+      replace_meter_fee = #{replaceMeterFee,jdbcType=DECIMAL},
+      cancel_purchase_fee = #{cancelPurchaseFee,jdbcType=DECIMAL},
+      max_normal_water_usage = #{maxNormalWaterUsage,jdbcType=INTEGER},
+      min_normal_water_usage = #{minNormalWaterUsage,jdbcType=INTEGER},
+      reeze_day = #{reezeDay,jdbcType=INTEGER},
+      event_func_flag = #{eventFuncFlag,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR}
+    where customer_type_code = #{customerTypeCode,jdbcType=BIGINT}
+  </update>
+</mapper>

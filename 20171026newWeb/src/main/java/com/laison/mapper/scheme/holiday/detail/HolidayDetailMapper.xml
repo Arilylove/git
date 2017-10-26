@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.scheme.holiday.detail.HolidayDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.scheme.holiday.detail.HolidayDetail" >
+    <id column="holiday_scheme_code" property="holidaySchemeCode" jdbcType="BIGINT" />
+    <id column="year_of_date" property="yearOfDate" jdbcType="INTEGER" />
+    <result column="holiday_version" property="holidayVersion" jdbcType="INTEGER" />
+    <result column="holiday_hex_string" property="holidayHexString" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    holiday_scheme_code, year_of_date, holiday_version, holiday_hex_string
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from holiday_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetailKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from holiday_detail
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+      and year_of_date = #{yearOfDate,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetailKey" >
+    delete from holiday_detail
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+      and year_of_date = #{yearOfDate,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetailExample" >
+    delete from holiday_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetail" >
+    insert into holiday_detail (holiday_scheme_code, year_of_date, holiday_version, 
+      holiday_hex_string)
+    values (#{holidaySchemeCode,jdbcType=BIGINT}, #{yearOfDate,jdbcType=INTEGER}, #{holidayVersion,jdbcType=INTEGER}, 
+      #{holidayHexString,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetail" >
+    insert into holiday_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="holidaySchemeCode != null" >
+        holiday_scheme_code,
+      </if>
+      <if test="yearOfDate != null" >
+        year_of_date,
+      </if>
+      <if test="holidayVersion != null" >
+        holiday_version,
+      </if>
+      <if test="holidayHexString != null" >
+        holiday_hex_string,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="holidaySchemeCode != null" >
+        #{holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="yearOfDate != null" >
+        #{yearOfDate,jdbcType=INTEGER},
+      </if>
+      <if test="holidayVersion != null" >
+        #{holidayVersion,jdbcType=INTEGER},
+      </if>
+      <if test="holidayHexString != null" >
+        #{holidayHexString,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetailExample" resultType="java.lang.Integer" >
+    select count(*) from holiday_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update holiday_detail
+    <set >
+      <if test="record.holidaySchemeCode != null" >
+        holiday_scheme_code = #{record.holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.yearOfDate != null" >
+        year_of_date = #{record.yearOfDate,jdbcType=INTEGER},
+      </if>
+      <if test="record.holidayVersion != null" >
+        holiday_version = #{record.holidayVersion,jdbcType=INTEGER},
+      </if>
+      <if test="record.holidayHexString != null" >
+        holiday_hex_string = #{record.holidayHexString,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update holiday_detail
+    set holiday_scheme_code = #{record.holidaySchemeCode,jdbcType=BIGINT},
+      year_of_date = #{record.yearOfDate,jdbcType=INTEGER},
+      holiday_version = #{record.holidayVersion,jdbcType=INTEGER},
+      holiday_hex_string = #{record.holidayHexString,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetail" >
+    update holiday_detail
+    <set >
+      <if test="holidayVersion != null" >
+        holiday_version = #{holidayVersion,jdbcType=INTEGER},
+      </if>
+      <if test="holidayHexString != null" >
+        holiday_hex_string = #{holidayHexString,jdbcType=CHAR},
+      </if>
+    </set>
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+      and year_of_date = #{yearOfDate,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.scheme.holiday.detail.HolidayDetail" >
+    update holiday_detail
+    set holiday_version = #{holidayVersion,jdbcType=INTEGER},
+      holiday_hex_string = #{holidayHexString,jdbcType=CHAR}
+    where holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT}
+      and year_of_date = #{yearOfDate,jdbcType=INTEGER}
+  </update>
+</mapper>

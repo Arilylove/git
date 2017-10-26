@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.regioninfo.RegionInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.regioninfo.RegionInfo" >
+    <id column="region_code" property="regionCode" jdbcType="BIGINT" />
+    <result column="parent_region_id" property="parentRegionId" jdbcType="BIGINT" />
+    <result column="paths" property="paths" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="region_type" property="regionType" jdbcType="INTEGER" />
+    <collection column="region_code" property="childRegions" ofType="RegionInfo" javaType="java.util.ArrayList" select="selectChildRegionsById"/>
+  </resultMap>
+  <select id="selectChildRegionsById" resultMap="BaseResultMap" parameterType="long">
+        SELECT * from region_info where  paths like '%,${_parameter},'
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    region_code, parent_region_id, paths, region_name, region_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.regioninfo.RegionInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from region_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from region_info
+    where region_code = #{regionCode,jdbcType=BIGINT}
+  </select>
+    <select id="getRegionPaths" resultType="String" parameterType="long" >
+     SELECT paths from region_info	where region_code = ${_parameter}
+  </select>
+   <select id="getRegionType" resultType="int" parameterType="long" >
+     SELECT region_type from region_info	where region_code = ${_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from region_info
+    where region_code = #{regionCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.regioninfo.RegionInfoExample" >
+    delete from region_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.regioninfo.RegionInfo" >
+    insert into region_info (region_code, parent_region_id, paths, 
+      region_name, region_type)
+    values (#{regionCode,jdbcType=BIGINT}, #{parentRegionId,jdbcType=BIGINT}, #{paths,jdbcType=VARCHAR}, 
+      #{regionName,jdbcType=VARCHAR}, #{regionType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.regioninfo.RegionInfo" >
+    insert into region_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="regionCode != null" >
+        region_code,
+      </if>
+      <if test="parentRegionId != null" >
+        parent_region_id,
+      </if>
+      <if test="paths != null" >
+        paths,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+      <if test="regionType != null" >
+        region_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=BIGINT},
+      </if>
+      <if test="parentRegionId != null" >
+        #{parentRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="paths != null" >
+        #{paths,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionType != null" >
+        #{regionType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.regioninfo.RegionInfoExample" resultType="java.lang.Integer" >
+    select count(*) from region_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update region_info
+    <set >
+      <if test="record.regionCode != null" >
+        region_code = #{record.regionCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentRegionId != null" >
+        parent_region_id = #{record.parentRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paths != null" >
+        paths = #{record.paths,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionName != null" >
+        region_name = #{record.regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionType != null" >
+        region_type = #{record.regionType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update region_info
+    set region_code = #{record.regionCode,jdbcType=BIGINT},
+      parent_region_id = #{record.parentRegionId,jdbcType=BIGINT},
+      paths = #{record.paths,jdbcType=VARCHAR},
+      region_name = #{record.regionName,jdbcType=VARCHAR},
+      region_type = #{record.regionType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.regioninfo.RegionInfo" >
+    update region_info
+    <set >
+      <if test="parentRegionId != null" >
+        parent_region_id = #{parentRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="paths != null" >
+        paths = #{paths,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionType != null" >
+        region_type = #{regionType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where region_code = #{regionCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.regioninfo.RegionInfo" >
+    update region_info
+    set parent_region_id = #{parentRegionId,jdbcType=BIGINT},
+      paths = #{paths,jdbcType=VARCHAR},
+      region_name = #{regionName,jdbcType=VARCHAR},
+      region_type = #{regionType,jdbcType=INTEGER}
+    where region_code = #{regionCode,jdbcType=BIGINT}
+  </update>
+</mapper>

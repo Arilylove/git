@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laison.mapper.scheme.friendlyperiod.FriendlyPeriodSchemeMapper" >
+  <resultMap id="BaseResultMap" type="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodScheme" >
+    <id column="friendly_period_scheme_code" property="friendlyPeriodSchemeCode" jdbcType="BIGINT" />
+    <result column="friendly_period_scheme_name" property="friendlyPeriodSchemeName" jdbcType="VARCHAR" />
+    <result column="friendly_period_use_count" property="friendlyPeriodUseCount" jdbcType="INTEGER" />
+    <result column="enable_offduty_time_flag" property="enableOffdutyTimeFlag" jdbcType="BIT" />
+    <result column="enable_weekend_flag" property="enableWeekendFlag" jdbcType="BIT" />
+    <result column="enable_holiday_flag" property="enableHolidayFlag" jdbcType="BIT" />
+    <result column="offduty_time_start" property="offdutyTimeStart" jdbcType="VARCHAR" />
+    <result column="offduty_time_end" property="offdutyTimeEnd" jdbcType="VARCHAR" />
+    <result column="weekend_day_string" property="weekendDayString" jdbcType="VARCHAR" />
+    <result column="holiday_scheme_code" property="holidaySchemeCode" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    friendly_period_scheme_code, friendly_period_scheme_name, friendly_period_use_count, 
+    enable_offduty_time_flag, enable_weekend_flag, enable_holiday_flag, offduty_time_start, 
+    offduty_time_end, weekend_day_string, holiday_scheme_code, create_date, state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodSchemeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from friendly_period_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from friendly_period_scheme
+    where friendly_period_scheme_code = #{friendlyPeriodSchemeCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from friendly_period_scheme
+    where friendly_period_scheme_code = #{friendlyPeriodSchemeCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodSchemeExample" >
+    delete from friendly_period_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodScheme" >
+    insert into friendly_period_scheme (friendly_period_scheme_code, friendly_period_scheme_name, 
+      friendly_period_use_count, enable_offduty_time_flag, 
+      enable_weekend_flag, enable_holiday_flag, offduty_time_start, 
+      offduty_time_end, weekend_day_string, holiday_scheme_code, 
+      create_date, state)
+    values (#{friendlyPeriodSchemeCode,jdbcType=BIGINT}, #{friendlyPeriodSchemeName,jdbcType=VARCHAR}, 
+      #{friendlyPeriodUseCount,jdbcType=INTEGER}, #{enableOffdutyTimeFlag,jdbcType=BIT}, 
+      #{enableWeekendFlag,jdbcType=BIT}, #{enableHolidayFlag,jdbcType=BIT}, #{offdutyTimeStart,jdbcType=VARCHAR}, 
+      #{offdutyTimeEnd,jdbcType=VARCHAR}, #{weekendDayString,jdbcType=VARCHAR}, #{holidaySchemeCode,jdbcType=BIGINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodScheme" >
+    insert into friendly_period_scheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="friendlyPeriodSchemeCode != null" >
+        friendly_period_scheme_code,
+      </if>
+      <if test="friendlyPeriodSchemeName != null" >
+        friendly_period_scheme_name,
+      </if>
+      <if test="friendlyPeriodUseCount != null" >
+        friendly_period_use_count,
+      </if>
+      <if test="enableOffdutyTimeFlag != null" >
+        enable_offduty_time_flag,
+      </if>
+      <if test="enableWeekendFlag != null" >
+        enable_weekend_flag,
+      </if>
+      <if test="enableHolidayFlag != null" >
+        enable_holiday_flag,
+      </if>
+      <if test="offdutyTimeStart != null" >
+        offduty_time_start,
+      </if>
+      <if test="offdutyTimeEnd != null" >
+        offduty_time_end,
+      </if>
+      <if test="weekendDayString != null" >
+        weekend_day_string,
+      </if>
+      <if test="holidaySchemeCode != null" >
+        holiday_scheme_code,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="friendlyPeriodSchemeCode != null" >
+        #{friendlyPeriodSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="friendlyPeriodSchemeName != null" >
+        #{friendlyPeriodSchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendlyPeriodUseCount != null" >
+        #{friendlyPeriodUseCount,jdbcType=INTEGER},
+      </if>
+      <if test="enableOffdutyTimeFlag != null" >
+        #{enableOffdutyTimeFlag,jdbcType=BIT},
+      </if>
+      <if test="enableWeekendFlag != null" >
+        #{enableWeekendFlag,jdbcType=BIT},
+      </if>
+      <if test="enableHolidayFlag != null" >
+        #{enableHolidayFlag,jdbcType=BIT},
+      </if>
+      <if test="offdutyTimeStart != null" >
+        #{offdutyTimeStart,jdbcType=VARCHAR},
+      </if>
+      <if test="offdutyTimeEnd != null" >
+        #{offdutyTimeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendDayString != null" >
+        #{weekendDayString,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaySchemeCode != null" >
+        #{holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodSchemeExample" resultType="java.lang.Integer" >
+    select count(*) from friendly_period_scheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update friendly_period_scheme
+    <set >
+      <if test="record.friendlyPeriodSchemeCode != null" >
+        friendly_period_scheme_code = #{record.friendlyPeriodSchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.friendlyPeriodSchemeName != null" >
+        friendly_period_scheme_name = #{record.friendlyPeriodSchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.friendlyPeriodUseCount != null" >
+        friendly_period_use_count = #{record.friendlyPeriodUseCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.enableOffdutyTimeFlag != null" >
+        enable_offduty_time_flag = #{record.enableOffdutyTimeFlag,jdbcType=BIT},
+      </if>
+      <if test="record.enableWeekendFlag != null" >
+        enable_weekend_flag = #{record.enableWeekendFlag,jdbcType=BIT},
+      </if>
+      <if test="record.enableHolidayFlag != null" >
+        enable_holiday_flag = #{record.enableHolidayFlag,jdbcType=BIT},
+      </if>
+      <if test="record.offdutyTimeStart != null" >
+        offduty_time_start = #{record.offdutyTimeStart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offdutyTimeEnd != null" >
+        offduty_time_end = #{record.offdutyTimeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weekendDayString != null" >
+        weekend_day_string = #{record.weekendDayString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.holidaySchemeCode != null" >
+        holiday_scheme_code = #{record.holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update friendly_period_scheme
+    set friendly_period_scheme_code = #{record.friendlyPeriodSchemeCode,jdbcType=BIGINT},
+      friendly_period_scheme_name = #{record.friendlyPeriodSchemeName,jdbcType=VARCHAR},
+      friendly_period_use_count = #{record.friendlyPeriodUseCount,jdbcType=INTEGER},
+      enable_offduty_time_flag = #{record.enableOffdutyTimeFlag,jdbcType=BIT},
+      enable_weekend_flag = #{record.enableWeekendFlag,jdbcType=BIT},
+      enable_holiday_flag = #{record.enableHolidayFlag,jdbcType=BIT},
+      offduty_time_start = #{record.offdutyTimeStart,jdbcType=VARCHAR},
+      offduty_time_end = #{record.offdutyTimeEnd,jdbcType=VARCHAR},
+      weekend_day_string = #{record.weekendDayString,jdbcType=VARCHAR},
+      holiday_scheme_code = #{record.holidaySchemeCode,jdbcType=BIGINT},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodScheme" >
+    update friendly_period_scheme
+    <set >
+      <if test="friendlyPeriodSchemeName != null" >
+        friendly_period_scheme_name = #{friendlyPeriodSchemeName,jdbcType=VARCHAR},
+      </if>
+      <if test="friendlyPeriodUseCount != null" >
+        friendly_period_use_count = #{friendlyPeriodUseCount,jdbcType=INTEGER},
+      </if>
+      <if test="enableOffdutyTimeFlag != null" >
+        enable_offduty_time_flag = #{enableOffdutyTimeFlag,jdbcType=BIT},
+      </if>
+      <if test="enableWeekendFlag != null" >
+        enable_weekend_flag = #{enableWeekendFlag,jdbcType=BIT},
+      </if>
+      <if test="enableHolidayFlag != null" >
+        enable_holiday_flag = #{enableHolidayFlag,jdbcType=BIT},
+      </if>
+      <if test="offdutyTimeStart != null" >
+        offduty_time_start = #{offdutyTimeStart,jdbcType=VARCHAR},
+      </if>
+      <if test="offdutyTimeEnd != null" >
+        offduty_time_end = #{offdutyTimeEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="weekendDayString != null" >
+        weekend_day_string = #{weekendDayString,jdbcType=VARCHAR},
+      </if>
+      <if test="holidaySchemeCode != null" >
+        holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where friendly_period_scheme_code = #{friendlyPeriodSchemeCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.laison.entity.scheme.friendlyperiod.FriendlyPeriodScheme" >
+    update friendly_period_scheme
+    set friendly_period_scheme_name = #{friendlyPeriodSchemeName,jdbcType=VARCHAR},
+      friendly_period_use_count = #{friendlyPeriodUseCount,jdbcType=INTEGER},
+      enable_offduty_time_flag = #{enableOffdutyTimeFlag,jdbcType=BIT},
+      enable_weekend_flag = #{enableWeekendFlag,jdbcType=BIT},
+      enable_holiday_flag = #{enableHolidayFlag,jdbcType=BIT},
+      offduty_time_start = #{offdutyTimeStart,jdbcType=VARCHAR},
+      offduty_time_end = #{offdutyTimeEnd,jdbcType=VARCHAR},
+      weekend_day_string = #{weekendDayString,jdbcType=VARCHAR},
+      holiday_scheme_code = #{holidaySchemeCode,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR}
+    where friendly_period_scheme_code = #{friendlyPeriodSchemeCode,jdbcType=BIGINT}
+  </update>
+</mapper>
